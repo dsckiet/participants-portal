@@ -11,8 +11,11 @@ const Register = props => {
 	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
-		if (localStorage.getItem("token")) {
-			props.history.push("/");
+		const token = JSON.parse(localStorage.getItem("token"));
+		if (token) {
+			if (token.token !== "") {
+				props.history.push("/");
+			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
@@ -25,7 +28,6 @@ const Register = props => {
 			if (!err) {
 				try {
 					const res = await registerService(values);
-					console.log(res);
 
 					if (res.error) {
 						_notification("error", "Error", res.message);
