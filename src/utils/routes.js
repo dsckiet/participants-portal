@@ -9,7 +9,7 @@ export const UPDATE_PROFILE = "/users/profile/?id=5deab2193026f30ec826a0cc"; // 
 export const VIEW_USERS = "/users?sortBy=createdAt&sortType=asc"; // GET
 
 /** EVENTS MODULE : PARTICIPANTS **/
-export const REGISTER_PARTICIPANT = "/events/register_part"; // POST
+export const REGISTER_PARTICIPANT = "/events/participants"; // POST NEW
 export const LOGIN_PARTICIPANT = "/events/part_login"; // POST
 export const REGISTER_FOR_EVENT = "/events/register_in_event"; // POST
 export const UPDATE_PARTICIPANT =

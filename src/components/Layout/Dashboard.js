@@ -5,7 +5,7 @@ import PageTitle from "./PageTitle";
 import "./style.css";
 import { DashCards } from "./DashCards";
 
-export default props => {
+const Dashboard = props => {
 	const [todos, setTodos] = useState(
 		localStorage.getItem("todos")
 			? JSON.parse(localStorage.getItem("todos"))
@@ -108,3 +108,5 @@ export default props => {
 		</>
 	);
 };
+
+export default Dashboard;

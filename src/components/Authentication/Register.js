@@ -2,31 +2,19 @@ import React, { useState, useEffect } from "react";
 import { Form, Input, Button, Card, Select, Row, Col, InputNumber } from "antd";
 import logo from "../../utils/assets/images/logo-black.svg";
 import { Link } from "react-router-dom";
-// import useInputState from "../../hooks/useInputState";
 import "./style.css";
 import { _notification, GET_BRANCHES, GET_YEARS } from "../../utils/_helpers";
 import { registerService } from "../../utils/services";
 const { Option } = Select;
 
 const Register = props => {
-	const [name, updateName] = useState("");
-	const [email, updateEmail] = useState("");
-	const [branch, updateBranch] = useState("");
-	const [year, updateYear] = useState("");
-	const [phone, updatePhone] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 
 	useEffect(() => {
-		props.form.setFieldsValue({
-			email,
-			name,
-			branch,
-			year,
-			phone
-		});
 		if (localStorage.getItem("token")) {
 			props.history.push("/");
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const handleSubmit = e => {
@@ -36,8 +24,8 @@ const Register = props => {
 		props.form.validateFields(async (err, values) => {
 			if (!err) {
 				try {
-					const data = { email, name, phone, branch, year };
-					const res = await registerService(data);
+					const res = await registerService(values);
+					console.log(res);
 
 					if (res.error) {
 						_notification("error", "Error", res.message);
@@ -47,11 +35,6 @@ const Register = props => {
 							"Success",
 							"Registered! Login to continue"
 						);
-						updateEmail("");
-						updateName("");
-						updateBranch("");
-						updatePhone("");
-						updateYear("");
 						setTimeout(() => {
 							props.history.push("/login");
 						}, 200);
@@ -80,13 +63,7 @@ const Register = props => {
 									message: "Please input your name!"
 								}
 							]
-						})(
-							<Input
-								type="text"
-								placeholder="Name"
-								onChange={e => updateName(e.target.value)}
-							/>
-						)}
+						})(<Input type="text" placeholder="Name" />)}
 					</Form.Item>
 					<Form.Item>
 						{getFieldDecorator("email", {
@@ -97,15 +74,7 @@ const Register = props => {
 									message: "Please input your email!"
 								}
 							]
-						})(
-							<Input
-								type="email"
-								placeholder="Email"
-								onChange={e =>
-									updateEmail(e.target.value.toLowerCase())
-								}
-							/>
-						)}
+						})(<Input type="email" placeholder="Email" />)}
 					</Form.Item>
 					<Form.Item>
 						{getFieldDecorator("phone", {
@@ -121,7 +90,6 @@ const Register = props => {
 								maxLength={10}
 								style={{ width: "100%" }}
 								placeholder="Phone no."
-								onChange={value => updatePhone(value)}
 							/>
 						)}
 					</Form.Item>
@@ -137,10 +105,7 @@ const Register = props => {
 										}
 									]
 								})(
-									<Select
-										onChange={value => updateBranch(value)}
-										placeholder="Branch"
-									>
+									<Select placeholder="Branch">
 										<Option value="" disabled>
 											Select Branch
 										</Option>
@@ -163,10 +128,7 @@ const Register = props => {
 										}
 									]
 								})(
-									<Select
-										onChange={value => updateYear(value)}
-										placeholder="Year"
-									>
+									<Select placeholder="Year">
 										<Option value="" disabled>
 											Select Year
 										</Option>
@@ -190,20 +152,11 @@ const Register = props => {
 						>
 							Register
 						</Button>
-
-						{/* <Divider />
-						<Link to="/signup">Create an account!</Link>
-						<Link
-							className="login-form-forgot"
-							to="/forgot-password"
-						>
-							Forgot password?
-						</Link> */}
 					</Form.Item>
 				</Form>
 			</Card>
 			<p style={{ textAlign: "center", marginTop: 12 }}>
-				<Link to="/login">Have an account? Login here</Link>
+				Have an account? <Link to="/login">Login here</Link>
 			</p>
 		</div>
 	);

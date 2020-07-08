@@ -5,6 +5,7 @@ import logo from "../../utils/assets/images/logo-black.svg";
 import "./style.css";
 import { _notification } from "../../utils/_helpers";
 import { loginService } from "../../utils/services";
+import { Link } from "react-router-dom";
 
 const Login = props => {
 	const [email, updateEmail] = useState("");
@@ -131,7 +132,7 @@ const Login = props => {
 				</Form>
 			</Card>
 			<p style={{ textAlign: "center", marginTop: 12 }}>
-				Don't have an account? Contact your lead
+				Don't have an account? <Link to="/register">Register here</Link>
 			</p>
 		</div>
 	);

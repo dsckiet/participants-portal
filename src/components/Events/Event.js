@@ -4,7 +4,7 @@ import "./style.css";
 import { _notification } from "../../utils/_helpers";
 import { Link } from "react-router-dom";
 
-export default props => {
+const Events = props => {
 	const [event, setEvent] = useState(props.event);
 	const {
 		title,
@@ -67,3 +67,5 @@ export default props => {
 		</>
 	);
 };
+
+export default Events;

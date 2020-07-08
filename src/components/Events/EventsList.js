@@ -7,7 +7,8 @@ import { _notification } from "../../utils/_helpers";
 import Event from "./Event";
 import { Link } from "react-router-dom";
 const { Option } = Select;
-export default props => {
+
+const EventsList = props => {
 	const [events, setEvents] = useState([]);
 	const [editDrawer, setEditDrawer] = useState(false);
 	const [eventId, setEventId] = useState(null);
@@ -61,3 +62,5 @@ export default props => {
 		</>
 	);
 };
+
+export default EventsList;

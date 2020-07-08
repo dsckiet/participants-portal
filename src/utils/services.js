@@ -6,7 +6,7 @@ import {
 	LOGIN_PARTICIPANT
 } from "./routes";
 
-const BASE_URL = process.env.REACT_APP_API_BASE_URL;
+const BASE_URL = "https://api.dsckiet.com/dev";
 
 axios.defaults.baseURL = BASE_URL;
 
