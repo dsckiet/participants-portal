@@ -20,7 +20,7 @@ export const PARTICIPANT_DETAILS_BY_LEAD =
 	"/events/get_part?query=ritik&eventId=5e6dfb7caad4441a9ceb5b2e"; // GET
 
 /** EVENTS MODULE : EVENTS **/
-export const GET_EVENTS = "/events/get_events"; // GET
+export const GET_EVENTS = "/events"; // GET
 export const GET_EVENT = "/events/get_events/"; // GET
 export const ADD_EVENT = "/events/add_event"; // POST
 export const CHANGE_EVENT_CODE = "/events/change_event_code"; // POST
