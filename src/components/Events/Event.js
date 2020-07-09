@@ -48,7 +48,7 @@ const Events = props => {
 							marginBottom: 8
 						}}
 					></div>
-					{isRegistrationOpened && isRegistrationRequired ? (
+					{/* {isRegistrationOpened && isRegistrationRequired ? (
 						<Button block>Register</Button>
 					) : (
 						<p
@@ -61,7 +61,7 @@ const Events = props => {
 						>
 							Registrations will start soon
 						</p>
-					)}
+					)} */}
 				</Card>
 			</Col>
 		</>

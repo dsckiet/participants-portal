@@ -30,6 +30,7 @@ const EventsList = props => {
 			setIsLoading(true);
 			try {
 				const { data } = await getEventsService();
+				console.log(data);
 				setEvents(data.upcomingEvents);
 				setAllEvents(data);
 				setIsLoading(false);
@@ -55,7 +56,9 @@ const EventsList = props => {
 			<div className="events-wrapper">
 				<Row gutter={[16, 16]}>
 					{events
-						? events.map(event => <Event event={event} />)
+						? events.map((event, id) => (
+								<Event key={id} event={event} />
+						  ))
 						: "Loading"}
 				</Row>
 			</div>

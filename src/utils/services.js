@@ -1,11 +1,13 @@
 import axios from "axios";
+import jwt from "jwt-decode";
 import {
 	GET_EVENTS,
 	GET_EVENT,
 	REGISTER_PARTICIPANT,
 	LOGIN_PARTICIPANT,
 	FORGOTPASS,
-	RESETPASS
+	RESETPASS,
+	VIEW_PROFILE
 } from "./routes";
 
 const BASE_URL = "https://api.dsckiet.com/dev";
@@ -13,8 +15,14 @@ const BASE_URL = "https://api.dsckiet.com/dev";
 axios.defaults.baseURL = BASE_URL;
 
 function setUserToken(token) {
-	let AUTH_TOKEN = localStorage.getItem("token");
-	if (AUTH_TOKEN) axios.defaults.headers.common["x-auth-token"] = AUTH_TOKEN;
+	let AUTH_TOKEN = JSON.parse(localStorage.getItem("token"));
+	if (AUTH_TOKEN.token !== "") {
+		if (AUTH_TOKEN.token.includes("Logout")) {
+			localStorage.clear();
+			window.location.push("/login");
+		}
+		axios.defaults.headers.common["x-auth-token"] = AUTH_TOKEN.token;
+	}
 }
 
 /******************AUTH SERVICES********************/
@@ -89,3 +97,22 @@ export async function getEventService(id) {
 		return err.response.data;
 	}
 }
+
+/******************PARTICIPANTS SERVICES********************/
+export const getParticipantService = async params => {
+	setUserToken();
+	try {
+		const response = await axios.get(VIEW_PROFILE, { params });
+		return response.data;
+	} catch (err) {
+		if (err.response) throw err.response.data;
+		else throw err.message;
+	}
+};
+
+/******************Helper SERVICES********************/
+export const getRole = () => {
+	let AUTH_TOKEN = JSON.parse(localStorage.getItem("token"));
+	let decode = jwt(AUTH_TOKEN.token);
+	return decode;
+};

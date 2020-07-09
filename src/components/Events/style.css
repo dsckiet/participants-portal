@@ -30,3 +30,7 @@
 .event-card img {
 	max-height: 200px;
 }
+
+.events-wrapper {
+	margin-top: 15px;
+}
