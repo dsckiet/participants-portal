@@ -2,6 +2,7 @@
 export const REGISTER_PARTICIPANT = "/events/participants"; // POST NEW
 export const LOGIN_PARTICIPANT = "/events/participants/login"; // POST NEW
 export const FORGOTPASS = "/events/participants/forgot-pwd"; // POST
+export const RESETPASS = "/events/participants/reset-pwd"; // POST
 // @queryParams userId
 export const UPDATE_USER = "/users/5deab2193026f30ec826a0cc"; // PUT
 // @queryParams userId
