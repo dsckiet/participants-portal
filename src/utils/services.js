@@ -3,7 +3,8 @@ import {
 	GET_EVENTS,
 	GET_EVENT,
 	REGISTER_PARTICIPANT,
-	LOGIN_PARTICIPANT
+	LOGIN_PARTICIPANT,
+	FORGOTPASS
 } from "./routes";
 
 const BASE_URL = "https://api.dsckiet.com/dev";
@@ -43,6 +44,16 @@ export async function loginService(data) {
 		return err.response.data;
 	}
 }
+
+export const forgotPassService = async data => {
+	try {
+		const response = await axios.post(FORGOTPASS, data);
+		return response.data;
+	} catch (err) {
+		if (err.response) throw err.response.data;
+		else throw err.message;
+	}
+};
 
 /******************EVENT SERVICES********************/
 export async function getEventsService() {

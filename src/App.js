@@ -13,6 +13,7 @@ import Navigator from "./components/Layout/Navigator";
 import "./App.css";
 import "./custom-antd.css";
 import { AuthContext } from "./contexts/userContext";
+import ForgotPassword from "./components/Authentication/ForgotPassword";
 
 function App() {
 	return (
@@ -20,6 +21,7 @@ function App() {
 			<Switch>
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/register" component={Register} />
+				<Route exact path="/forgot" component={ForgotPassword} />
 				<PrivateRoute path="/" component={Navigator} />
 			</Switch>
 		</Router>

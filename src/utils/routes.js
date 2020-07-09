@@ -1,6 +1,7 @@
-/** USERS MODULE **/
-export const ADD_USER = "/users"; // POST
-export const LOGIN = "/users/login"; // POST
+/** PARTICIPANTS MODULE **/
+export const REGISTER_PARTICIPANT = "/events/participants"; // POST NEW
+export const LOGIN_PARTICIPANT = "/events/participants/login"; // POST NEW
+export const FORGOTPASS = "/events/participants/forgot-pwd"; // POST
 // @queryParams userId
 export const UPDATE_USER = "/users/5deab2193026f30ec826a0cc"; // PUT
 // @queryParams userId
@@ -9,8 +10,6 @@ export const UPDATE_PROFILE = "/users/profile/?id=5deab2193026f30ec826a0cc"; // 
 export const VIEW_USERS = "/users?sortBy=createdAt&sortType=asc"; // GET
 
 /** EVENTS MODULE : PARTICIPANTS **/
-export const REGISTER_PARTICIPANT = "/events/participants"; // POST NEW
-export const LOGIN_PARTICIPANT = "/events/participants/login"; // POST NEW
 export const REGISTER_FOR_EVENT = "/events/register_in_event"; // POST
 export const UPDATE_PARTICIPANT =
 	"/events/update_part/5e6a67b4890fda16986ae843"; // PUT
