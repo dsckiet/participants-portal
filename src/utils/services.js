@@ -7,14 +7,15 @@ import {
 	LOGIN_PARTICIPANT,
 	FORGOTPASS,
 	RESETPASS,
-	VIEW_PROFILE
+	VIEW_PROFILE,
+	UPDATE_PROFILE
 } from "./routes";
 
 const BASE_URL = "https://api.dsckiet.com/dev";
 
 axios.defaults.baseURL = BASE_URL;
 
-function setUserToken(token) {
+function setUserToken() {
 	let AUTH_TOKEN = JSON.parse(localStorage.getItem("token"));
 	if (AUTH_TOKEN.token !== "") {
 		if (AUTH_TOKEN.token.includes("Logout")) {
@@ -103,6 +104,17 @@ export const getParticipantService = async params => {
 	setUserToken();
 	try {
 		const response = await axios.get(VIEW_PROFILE, { params });
+		return response.data;
+	} catch (err) {
+		if (err.response) throw err.response.data;
+		else throw err.message;
+	}
+};
+
+export const updateParticipantService = async data => {
+	setUserToken();
+	try {
+		const response = await axios.put(UPDATE_PROFILE, data);
 		return response.data;
 	} catch (err) {
 		if (err.response) throw err.response.data;

@@ -7,7 +7,7 @@ export const RESETPASS = "/events/participants/reset-pwd"; // POST
 export const UPDATE_USER = "/users/5deab2193026f30ec826a0cc"; // PUT
 // @queryParams pid
 export const VIEW_PROFILE = "/events/participants/profile"; // GET
-export const UPDATE_PROFILE = "/users/profile/?id=5deab2193026f30ec826a0cc"; // POST
+export const UPDATE_PROFILE = "/events/participants"; // POST
 export const VIEW_USERS = "/users?sortBy=createdAt&sortType=asc"; // GET
 
 /** EVENTS MODULE : PARTICIPANTS **/
