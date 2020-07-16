@@ -14,18 +14,23 @@
 .ant-btn {
 	background-color: #4285f4;
 	color: #ffffff;
-	border: 0 !important;
+	border: 0;
 }
 
 .ant-btn:hover {
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-/* .event-card {
-	border: 0 !important;
-	border-radius: 4px !important;
-	box-shadow: 0 0 4px rgba(0, 0, 0, 0.08);
-} */
+.table-wrapper-card {
+	margin-top: 12px;
+	display: block;
+	overflow-x: auto;
+	white-space: nowrap;
+}
+
+.table-wrapper-card .ant-card-body {
+	padding: 0;
+}
 
 .event-card {
 	-webkit-box-orient: vertical;

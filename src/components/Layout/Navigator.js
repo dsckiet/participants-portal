@@ -9,11 +9,12 @@ import {
 	Link
 } from "react-router-dom";
 import logo from "../../utils/assets/images/logo-white.svg";
+import MyEventDetails from "./../Events/MyEvents/MyEventDetails";
 
 const { Content, Sider } = Layout;
 
 const Navigator = props => {
-	const [isCollapsed] = useState(false);
+	const [isCollapsed] = useState(true);
 	// const [show, setShow] = useState(true);
 	const routeKey = localStorage.getItem("routeKey");
 
@@ -107,6 +108,11 @@ const Navigator = props => {
 									) : null;
 								})}
 								<Redirect from="/dashboard" to="/" />
+								<Route
+									exact
+									path="/myEvents/:id"
+									component={MyEventDetails}
+								/>
 							</Switch>
 						</Content>
 					</Layout>

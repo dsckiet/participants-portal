@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PageTitle from "../Layout/PageTitle";
-import { Row, Select } from "antd";
+import { Row, Select, Result } from "antd";
 import "./style.css";
 import { getEventsService } from "../../utils/services";
 import { _notification } from "../../utils/_helpers";
@@ -58,15 +58,17 @@ const EventsList = props => {
 			<br />
 			<div className="events-wrapper">
 				<Row gutter={[16, 16]}>
-					{events
-						? events.map((event, id) => (
-								<Event
-									key={id}
-									event={event}
-									eventType={eventType}
-								/>
-						  ))
-						: "Loading"}
+					{events.length !== 0 ? (
+						events.map((event, id) => (
+							<Event
+								key={id}
+								event={event}
+								eventType={eventType}
+							/>
+						))
+					) : (
+						<Result status="warning" title="No events" />
+					)}
 				</Row>
 			</div>
 		</>
