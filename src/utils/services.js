@@ -9,11 +9,7 @@ import {
 	RESETPASS,
 	VIEW_PROFILE,
 	UPDATE_PROFILE,
-	REGISTER_FOR_EVENT,
-	MARK_ATTENDANCE,
-	GET_CERTI,
-	ADD_FEEDBACK,
-	GET_ATTENDANCE_REPORT
+	REGISTER_FOR_EVENT
 } from "./routes";
 
 const BASE_URL = "https://api.dsckiet.com/dev";
@@ -94,7 +90,7 @@ export async function getEventsService() {
 
 export async function getEventService(id) {
 	try {
-		const params = { eid: id };
+		const params = { id };
 		const response = await axios.get(GET_EVENT, { params });
 		if (response.status === 200 && response.data.error === false) {
 			return response.data;
@@ -108,39 +104,6 @@ export const registerEventService = async data => {
 	setUserToken();
 	try {
 		const response = await axios.post(REGISTER_FOR_EVENT, data);
-		return response.data;
-	} catch (err) {
-		if (err.response) throw err.response.data;
-		else throw err.message;
-	}
-};
-
-export const markAttendanceService = async data => {
-	setUserToken();
-	try {
-		const response = await axios.post(MARK_ATTENDANCE, data);
-		return response.data;
-	} catch (err) {
-		if (err.response) throw err.response.data;
-		else throw err.message;
-	}
-};
-
-export const generateCertificateService = async id => {
-	setUserToken();
-	try {
-		const response = await axios.get(`${GET_CERTI}/${id}`);
-		return response.data;
-	} catch (err) {
-		if (err.response) throw err.response.data;
-		else throw err.message;
-	}
-};
-
-export const submitFeedbackService = async data => {
-	setUserToken();
-	try {
-		const response = await axios.post(ADD_FEEDBACK, data);
 		return response.data;
 	} catch (err) {
 		if (err.response) throw err.response.data;
@@ -164,17 +127,6 @@ export const updateParticipantService = async data => {
 	setUserToken();
 	try {
 		const response = await axios.put(UPDATE_PROFILE, data);
-		return response.data;
-	} catch (err) {
-		if (err.response) throw err.response.data;
-		else throw err.message;
-	}
-};
-
-export const attendanceReportService = async params => {
-	setUserToken();
-	try {
-		const response = await axios.get(GET_ATTENDANCE_REPORT, { params });
 		return response.data;
 	} catch (err) {
 		if (err.response) throw err.response.data;

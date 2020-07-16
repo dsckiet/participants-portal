@@ -31,24 +31,18 @@ const Events = props => {
 						{venue} <span style={{ float: "right" }}>{time}</span>
 					</p>
 
-					<p>{description.slice(0, 60)} ...</p>
+					<p>{description.slice(0, 105)} ...</p>
 					<p>
 						{new Date(startDate).toDateString()} to{" "}
 						{new Date(endDate).toDateString()}
-						{props.eventType ? (
-							<Tag
-								style={{
-									float: "right",
-									right: 0,
-									marginRight: 0
-								}}
-								color="#0f9d58"
-							>
-								{props.eventType &&
-									props.eventType.charAt(0).toUpperCase() +
-										props.eventType.slice(1)}
-							</Tag>
-						) : null}
+						<Tag
+							style={{ float: "right", right: 0, marginRight: 0 }}
+							color="#0f9d58"
+						>
+							{props.eventType &&
+								props.eventType.charAt(0).toUpperCase() +
+									props.eventType.slice(1)}
+						</Tag>
 					</p>
 					<div
 						style={{
@@ -59,6 +53,20 @@ const Events = props => {
 							marginBottom: 8
 						}}
 					></div>
+					{/* {isRegistrationOpened && isRegistrationRequired ? (
+						<Button block>Register</Button>
+					) : (
+						<p
+							style={{
+								color: "#DB4437",
+								textAlign: "center",
+								marginTop: 19,
+								marginBottom: 0
+							}}
+						>
+							Registrations will start soon
+						</p>
+					)} */}
 				</Card>
 			</Col>
 			<EventDetails
