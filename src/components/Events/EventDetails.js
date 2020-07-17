@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Col, Row, Button, Tag } from "antd";
+import { Modal, Col, Row, Button, Tag, Popconfirm } from "antd";
 import styled from "styled-components";
 import { MdLocationOn, MdDateRange } from "react-icons/md";
 import { IoIosTime } from "react-icons/io";
@@ -51,6 +51,7 @@ const EventDetails = ({ visible, handleModal, event, eventType }) => {
 	const [loading, setLoading] = useState(false);
 	const [userData] = useState(getRole());
 	const [eventData, setEventData] = useState(null);
+	const [refresh, toggleRefresh] = useState(false);
 	const {
 		_id,
 		title,
@@ -77,7 +78,7 @@ const EventDetails = ({ visible, handleModal, event, eventType }) => {
 			}
 		})();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [refresh]);
 
 	const handleRegister = async () => {
 		setLoading(true);
@@ -86,6 +87,7 @@ const EventDetails = ({ visible, handleModal, event, eventType }) => {
 			const res = await registerEventService(body);
 			if (res.message === "success") {
 				_notification("success", "Success", "Registration Successful!");
+				toggleRefresh(!refresh);
 			} else {
 				_notification("error", "Error", res.message);
 			}
@@ -97,7 +99,7 @@ const EventDetails = ({ visible, handleModal, event, eventType }) => {
 	};
 
 	return (
-		<div>
+		<>
 			<Modal
 				style={{ top: 20 }}
 				visible={visible}
@@ -118,10 +120,11 @@ const EventDetails = ({ visible, handleModal, event, eventType }) => {
 						<Tag color="blue">{eventType}</Tag>
 					</Col>
 					<Col xl={12} lg={12} md={12} sm={12} xs={24}>
-						{isRegistrationRequired ? (
+						{eventType === "past" ||
+						eventType ===
+							"running" ? null : isRegistrationRequired ? (
 							isRegistrationOpened ? (
-								eventType === "past" ||
-								eventType === "running" ? null : eventData ? (
+								eventData ? (
 									eventData.includes(_id) ? (
 										<ButtonContainer>
 											<EditButton
@@ -134,14 +137,22 @@ const EventDetails = ({ visible, handleModal, event, eventType }) => {
 										</ButtonContainer>
 									) : (
 										<ButtonContainer>
-											<EditButton
-												size="large"
-												loading={loading}
-												onClick={handleRegister}
-												type="primary"
+											<Popconfirm
+												title="Do you want to register in the event?"
+												onConfirm={handleRegister}
+												// onCancel={cancel}
+												okText="Yes"
+												cancelText="No"
 											>
-												Register here
-											</EditButton>
+												<EditButton
+													size="large"
+													loading={loading}
+													// onClick={handleRegister}
+													type="primary"
+												>
+													Register here
+												</EditButton>
+											</Popconfirm>
 										</ButtonContainer>
 									)
 								) : null
@@ -201,7 +212,7 @@ const EventDetails = ({ visible, handleModal, event, eventType }) => {
 					<p>{description}</p>
 				</DescriptionContainer>
 			</Modal>
-		</div>
+		</>
 	);
 };
 

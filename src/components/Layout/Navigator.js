@@ -11,44 +11,49 @@ import {
 import logo from "../../utils/assets/images/logo-white.svg";
 import MyEventDetails from "./../Events/MyEvents/MyEventDetails";
 
+import styled from "styled-components";
+
 const { Content, Sider } = Layout;
 
-const Navigator = props => {
-	const [isCollapsed] = useState(true);
-	// const [show, setShow] = useState(true);
-	const routeKey = localStorage.getItem("routeKey");
+const MenuLogo = styled.div`
+	padding: 20px 24px;
+`;
 
-	// const handleMenu = () => {
-	// 	setIsCollapsed(!isCollapsed);
-	// 	setShow(!show);
-	// };
+const EditSider = styled(Sider)`
+	@media (max-width: 992px) {
+		display: none;
+	}
+`;
+
+const Navigator = props => {
+
+	const [isCollapsed] = useState(false);
+
 
 	return (
 		<>
 			<Router>
 				<Layout>
 					{/* {show ? ( */}
-					<Sider
+					<EditSider
 						theme="dark"
 						trigger={null}
 						collapsible
 						collapsed={isCollapsed}
 					>
-						<div className="logo">
+						<MenuLogo>
 							<img
 								src={logo}
 								hidden={isCollapsed}
 								width="160"
-								style={{ padding: "12px 24px" }}
-								alt=""
+								alt="logo"
 							/>
-						</div>
-						<hr style={{ margin: 0, padding: 0 }} />
+						</MenuLogo>
 						<Menu
 							theme="dark"
 							height="100%"
 							mode="inline"
-							defaultSelectedKeys={routeKey || "dashboard"}
+							defaultSelectedKeys={"dashboard"}
 						>
 							{routes.map((route, idx) => (
 								<Menu.Item
@@ -74,10 +79,9 @@ const Navigator = props => {
 							>
 								<Icon type="lock" />
 								<span>Sign Out</span>
-								{/* <Link to={route.path} /> */}
 							</Menu.Item>
 						</Menu>
-					</Sider>
+					</EditSider>
 					{/* ) : null} */}
 
 					<Layout>
@@ -89,11 +93,6 @@ const Navigator = props => {
 								minHeight: "280"
 							}}
 						>
-							{/* <Icon
-								className="trigger"
-								type={isCollapsed ? "menu-unfold" : "menu-fold"}
-								onClick={handleMenu}
-							/> */}
 							<Switch>
 								{routes.map((route, idx) => {
 									return route.component ? (

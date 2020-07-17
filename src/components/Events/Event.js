@@ -1,7 +1,15 @@
 import React, { useState } from "react";
-import { Tag, Card, Col } from "antd";
+import { Tag, Card, Col, Row } from "antd";
 import "./style.css";
 import EventDetails from "./EventDetails";
+import styled from "styled-components";
+
+const Time = styled.p`
+	float: right;
+	@media (max-width: 400px) {
+		margin-top: -10px;
+	}
+`;
 
 const Events = props => {
 	const [event] = useState(props.event);
@@ -25,31 +33,38 @@ const Events = props => {
 		<>
 			<Col xl={8} lg={12} md={12} sm={24} xs={24}>
 				<Card className="event-card" onClick={() => handleModal(true)}>
-					<h3>{title}</h3>
-
-					<p>
-						{venue} <span style={{ float: "right" }}>{time}</span>
-					</p>
-
-					<p>{description.slice(0, 60)} ...</p>
-					<p>
-						{new Date(startDate).toDateString()} to{" "}
-						{new Date(endDate).toDateString()}
-						{props.eventType ? (
-							<Tag
-								style={{
-									float: "right",
-									right: 0,
-									marginRight: 0
-								}}
-								color="#0f9d58"
-							>
-								{props.eventType &&
-									props.eventType.charAt(0).toUpperCase() +
-										props.eventType.slice(1)}
-							</Tag>
-						) : null}
-					</p>
+					<h2>{title}</h2>
+					<Row>
+						<Col xl={12} lg={12} md={12} sm={12} xs={24}>
+							<p>{venue}</p>
+						</Col>
+						<Col xl={12} lg={12} md={12} sm={12} xs={24}>
+							<Time>{time}</Time>
+						</Col>
+					</Row>
+					<p>{description.slice(0, 50)} ...</p>
+					<Row>
+						<Col xl={10} lg={12} md={12} sm={12} xs={24}>
+							<p>
+								{new Date(startDate).toDateString()} to{" "}
+								{new Date(endDate).toDateString()}
+							</p>
+						</Col>
+						<Col xl={14} lg={12} md={12} sm={12} xs={24}>
+							{props.eventType ? (
+								<Tag
+									style={{
+										float: "right",
+										marginBottom: 8
+									}}
+									color="#0f9d58"
+								>
+									{props.eventType &&
+										props.eventType.toUpperCase()}
+								</Tag>
+							) : null}
+						</Col>
+					</Row>
 					<div
 						style={{
 							borderRadius: 4,

@@ -26,6 +26,7 @@ export const DashCards = () => {
 								bordered={false}
 								style={{
 									width: "100%",
+									height: "100% !important",
 									borderBottom: `16px solid ${route.color}`
 								}}
 							>
@@ -33,9 +34,9 @@ export const DashCards = () => {
 									<Col
 										xl={18}
 										lg={18}
-										sm={12}
-										md={16}
-										xs={12}
+										sm={18}
+										md={18}
+										xs={18}
 									>
 										<h2
 											style={{
@@ -47,7 +48,7 @@ export const DashCards = () => {
 										</h2>
 										{route.description}
 									</Col>
-									<Col xl={6} lg={6} sm={12} md={8} xs={12}>
+									<Col xl={6} lg={6} sm={6} md={6} xs={6}>
 										<Icon
 											style={iconStyle(route.color)}
 											type={route.icon}

@@ -5,6 +5,15 @@ import { getRole, getParticipantService } from "./../../../utils/services";
 import { _notification } from "./../../../utils/_helpers";
 import { Link } from "react-router-dom";
 
+import styled from "styled-components";
+
+const Time = styled.p`
+	float: right;
+	@media (max-width: 400px) {
+		margin-top: -10px;
+	}
+`;
+
 const MyEvents = () => {
 	const [myEvent, setMyEvent] = useState([]);
 	const [userData] = useState(getRole());
@@ -21,7 +30,8 @@ const MyEvents = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	return (
-		<>
+
+		<div className="all-Containers">
 			<PageTitle title="My Events" />
 			<Row gutter={[16, 16]}>
 				{myEvent.length !== 0 ? (
@@ -29,38 +39,68 @@ const MyEvents = () => {
 						<Col xl={8} lg={12} md={12} sm={24} xs={24} key={id}>
 							<Link to={`/myEvents/${event.eid}`}>
 								<Card className="event-card">
-									<h3>{event.details.title}</h3>
-
+									<h2>{event.details.title}</h2>
+									<Row>
+										<Col
+											xl={12}
+											lg={12}
+											md={12}
+											sm={12}
+											xs={24}
+										>
+											<p>{event.details.venue}</p>
+										</Col>
+										<Col
+											xl={12}
+											lg={12}
+											md={12}
+											sm={12}
+											xs={24}
+										>
+											<Time>{event.details.time}</Time>
+										</Col>
+									</Row>
 									<p>
-										{event.details.venue}{" "}
-										<span style={{ float: "right" }}>
-											{event.details.time}
-										</span>
-									</p>
-
-									<p>
-										{event.details.description.slice(0, 60)}{" "}
+										{event.details.description.slice(0, 50)}{" "}
 										...
 									</p>
-									<p>
-										{new Date(
-											event.details.startDate
-										).toDateString()}{" "}
-										to{" "}
-										{new Date(
-											event.details.endDate
-										).toDateString()}
-										<Tag
-											style={{
-												float: "right",
-												right: 0,
-												marginRight: 0
-											}}
-											color="#0f9d58"
+									<Row>
+										<Col
+											xl={12}
+											lg={12}
+											md={12}
+											sm={12}
+											xs={24}
 										>
-											{event.status.toUpperCase()}
-										</Tag>
-									</p>
+											<p>
+												{new Date(
+													event.details.startDate
+												).toDateString()}{" "}
+												to{" "}
+												{new Date(
+													event.details.endDate
+												).toDateString()}
+											</p>
+										</Col>
+										<Col
+											xl={12}
+											lg={12}
+											md={12}
+											sm={12}
+											xs={24}
+										>
+											<Tag
+												style={{
+													float: "right",
+													marginBottom: 8
+												}}
+												color="#0f9d58"
+											>
+												{event.status.toUpperCase()}
+											</Tag>
+										</Col>
+									</Row>
+
 									<div
 										style={{
 											borderRadius: 4,
@@ -78,7 +118,7 @@ const MyEvents = () => {
 					<Result status="warning" title="No events" />
 				)}
 			</Row>
-		</>
+		</div>
 	);
 };
 

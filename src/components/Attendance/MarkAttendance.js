@@ -18,6 +18,13 @@ const Heading = styled.p`
 	font-size: 18px;
 `;
 
+const QrrReader = styled(QrReader)`
+	width: 300px;
+	@media (max-width: 480px) {
+		width: 220px;
+	}
+`;
+
 const MarkAttendance = props => {
 	const [isLoading, setIsLoading] = useState(false);
 	const { getFieldDecorator } = props.form;
@@ -74,13 +81,13 @@ const MarkAttendance = props => {
 	};
 
 	return (
-		<div>
+		<div className="all-Containers">
+
 			<PageTitle title="Attendance" />
 
 			<Card
 				bordered={false}
 				style={{
-					width: "100%",
 					backgroundColor: "#4285f4",
 					borderRadius: "4px"
 				}}
@@ -89,13 +96,10 @@ const MarkAttendance = props => {
 					<div>
 						<Card bordered={false} style={{ borderRadius: "4px" }}>
 							<Heading>Scan QR code</Heading>
-							<QrReader
+							<QrrReader
 								delay={300}
 								onError={handleError}
 								onScan={handleScan}
-								style={{
-									width: "300px"
-								}}
 							/>
 						</Card>
 						<br />

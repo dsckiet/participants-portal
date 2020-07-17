@@ -44,7 +44,7 @@ const EventsList = props => {
 	}, []);
 
 	return (
-		<>
+		<div className="all-Containers">
 			<PageTitle title="Events" />
 			<Select
 				style={{ minWidth: 180 }}
@@ -71,7 +71,7 @@ const EventsList = props => {
 					)}
 				</Row>
 			</div>
-		</>
+		</div>
 	);
 };
 
