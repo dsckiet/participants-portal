@@ -5,7 +5,7 @@ import MyEvents from "../components/Events/MyEvents/MyEvents";
 
 let routes = [
 	{
-		path: "/dashboard",
+		path: "/",
 		exact: true,
 		name: "Dashboard",
 		component: Dashboard,
@@ -15,7 +15,7 @@ let routes = [
 		color: "#F4B400"
 	},
 	{
-		path: "/dashboard/events",
+		path: "/events",
 		exact: true,
 		component: EventsList,
 		name: "Events",
@@ -25,7 +25,7 @@ let routes = [
 		color: "#DB4437"
 	},
 	{
-		path: "/dashboard/myEvents",
+		path: "/myEvents",
 		exact: true,
 		component: MyEvents,
 		name: "MyEvents",
@@ -37,7 +37,7 @@ let routes = [
 		color: "#DB4437"
 	},
 	{
-		path: "/dashboard/attendance",
+		path: "/attendance",
 		exact: true,
 		component: MarkAttendance,
 		name: "Attendance",

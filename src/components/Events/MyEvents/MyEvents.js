@@ -36,7 +36,7 @@ const MyEvents = () => {
 				{myEvent.length !== 0 ? (
 					myEvent.map((event, id) => (
 						<Col xl={8} lg={12} md={12} sm={24} xs={24} key={id}>
-							<Link to={`/dashboard/myEvents/${event.eid}`}>
+							<Link to={`/myEvents/${event.eid}`}>
 								<Card className="event-card">
 									<h2>{event.details.title}</h2>
 									<Row>

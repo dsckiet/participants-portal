@@ -22,17 +22,21 @@ function App() {
 	return (
 		<Router>
 			<Switch>
-				<Route exact path="/" component={Landing} />
+				<Route exact path="/web-bootcamp" component={Landing} />
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/register" component={Register} />
-				<Route exact path="/register/event" component={RegisterEvent} />
+				<Route
+					exact
+					path="/register/web-bootcamp"
+					component={RegisterEvent}
+				/>
 				<Route exact path="/forgot" component={ForgotPassword} />
 				<Route
 					exact
 					path="/reset/:id/:token"
 					component={ResetPassword}
 				/>
-				<PrivateRoute path="/dashboard" component={Navigator} />
+				<PrivateRoute path="/" component={Navigator} />
 			</Switch>
 		</Router>
 	);

@@ -10,7 +10,7 @@ const Landing = () => {
 		const token = JSON.parse(localStorage.getItem("token"));
 		if (token) {
 			if (token.token !== "") {
-				history.push("/dashboard");
+				history.push("/");
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -107,7 +107,7 @@ const Landing = () => {
 							size="large"
 							type="primary"
 							onClick={() => {
-								history.push("/register/event");
+								history.push("/register/web-bootcamp");
 							}}
 						>
 							Register

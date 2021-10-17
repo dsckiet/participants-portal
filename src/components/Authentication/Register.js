@@ -14,7 +14,7 @@ const Register = props => {
 		const token = JSON.parse(localStorage.getItem("token"));
 		if (token) {
 			if (token.token !== "") {
-				props.history.push("/dashboard");
+				props.history.push("/");
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

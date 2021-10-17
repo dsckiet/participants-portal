@@ -13,7 +13,7 @@ const Register = props => {
 		const token = JSON.parse(localStorage.getItem("token"));
 		if (token) {
 			if (token.token !== "") {
-				props.history.push("/dashboard");
+				props.history.push("/");
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -25,8 +25,7 @@ const Register = props => {
 
 		props.form.validateFields(async (err, values) => {
 			if (!err) {
-				values["eid"] = "616b17686cb71e4084d1e6f1";
-				console.log(values);
+				values["eid"] = "616c14d2ebde4f81f8ee8b9a";
 				try {
 					const res = await registerBothService(values);
 

@@ -12,7 +12,7 @@ const ResetPassword = props => {
 		const token = JSON.parse(localStorage.getItem("token"));
 		if (token) {
 			if (token.token !== "") {
-				props.history.push("/dashboard");
+				props.history.push("/");
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,7 +42,7 @@ const ResetPassword = props => {
 						});
 					} else if (res.message === "success") {
 						_notification("success", "Success", "Password changed");
-						props.history.push("/");
+						props.history.push("/login");
 					}
 					setIsLoading(false);
 				} catch (err) {

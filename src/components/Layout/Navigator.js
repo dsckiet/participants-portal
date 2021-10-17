@@ -62,7 +62,7 @@ const Navigator = props => {
 							key={"signout"}
 							onClick={() => {
 								localStorage.clear();
-								props.history.push("/");
+								props.history.push("/login");
 							}}
 						>
 							<Icon type="lock" />
@@ -96,7 +96,7 @@ const Navigator = props => {
 							})}
 							<Route
 								exact
-								path="/dashboard/myEvents/:id"
+								path="/myEvents/:id"
 								component={MyEventDetails}
 							/>
 						</Switch>
