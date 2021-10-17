@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
 const Landing = () => {
 	const history = useHistory();
+
+	useEffect(() => {
+		const token = JSON.parse(localStorage.getItem("token"));
+		if (token) {
+			if (token.token !== "") {
+				history.push("/dashboard");
+			}
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 	return (
 		<div
 			style={{
