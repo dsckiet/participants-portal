@@ -17,8 +17,10 @@ import {
 	REGISTER_BOTH
 } from "./routes";
 
-const BASE_URL = "https://api.dsckiet.com/dev";
-// const BASE_URL = "https://b994-122-161-68-113.ngrok.io/api/v1";
+const BASE_URL =
+	window.location.host === "events.dsckiet.com"
+		? "https://api.dsckiet.com/prod"
+		: "https://api.dsckiet.com/dev";
 
 axios.defaults.baseURL = BASE_URL;
 
