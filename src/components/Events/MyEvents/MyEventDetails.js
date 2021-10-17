@@ -154,9 +154,7 @@ const MyEventDetails = props => {
 	});
 
 	return (
-
 		<div className="all-Containers">
-
 			<PageTitle title="My Events" />
 			{event ? (
 				<Card bordered={false}>
@@ -217,14 +215,14 @@ const MyEventDetails = props => {
 										Feedback
 									</Button>
 									<br />
-									<Button
+									{/* <Button
 										type="primary"
 										style={{ marginTop: "8px" }}
 										onClick={generateCerti}
 										loading={loading}
 									>
 										Generate Certificate
-									</Button>
+									</Button> */}
 								</div>
 							</DescriptionContainer>
 						</Col>
@@ -257,7 +255,6 @@ const MyEventDetails = props => {
 				/>
 			</Drawer>
 		</div>
-
 	);
 };
 

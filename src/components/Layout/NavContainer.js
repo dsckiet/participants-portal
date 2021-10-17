@@ -81,28 +81,30 @@ const NavContainer = props => {
 								className="nav-item m-1 "
 								style={{ fontWeight: "600" }}
 							>
-								<Link to="/">Dashboard</Link>
+								<Link to="/dashboard">Dashboard</Link>
 							</StyledListItem>
 
 							<StyledListItem
 								className="nav-item m-1"
 								style={{ fontWeight: "600" }}
 							>
-								<Link to="/events">Events</Link>
+								<Link to="/dashboard/events">Events</Link>
 							</StyledListItem>
 
 							<StyledListItem
 								className="nav-item m-1"
 								style={{ fontWeight: "600" }}
 							>
-								<Link to="/myEvents">My Events</Link>
+								<Link to="/dashboard/myEvents">My Events</Link>
 							</StyledListItem>
 
 							<StyledListItem
 								className="nav-item m-1"
 								style={{ fontWeight: "600" }}
 							>
-								<Link to="/attendance">Attendance</Link>
+								<Link to="/dashboard/attendance">
+									Attendance
+								</Link>
 							</StyledListItem>
 
 							<StyledListItem

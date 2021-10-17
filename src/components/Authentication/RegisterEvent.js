@@ -3,7 +3,7 @@ import { Form, Input, Button, Card, Select, Row, Col, InputNumber } from "antd";
 import logo from "../../utils/assets/images/logo-black.svg";
 import "./style.css";
 import { _notification, GET_BRANCHES, GET_YEARS } from "../../utils/_helpers";
-import { registerService } from "../../utils/services";
+import { registerBothService } from "../../utils/services";
 const { Option } = Select;
 
 const Register = props => {
@@ -25,8 +25,10 @@ const Register = props => {
 
 		props.form.validateFields(async (err, values) => {
 			if (!err) {
+				values["eid"] = "616b17686cb71e4084d1e6f1";
+				console.log(values);
 				try {
-					const res = await registerService(values);
+					const res = await registerBothService(values);
 
 					if (res.error) {
 						_notification("error", "Error", res.message);
@@ -37,7 +39,7 @@ const Register = props => {
 							"Registered! Login to continue"
 						);
 						setTimeout(() => {
-							props.history.push("/");
+							props.history.push("/login");
 						}, 200);
 					}
 					setIsLoading(false);

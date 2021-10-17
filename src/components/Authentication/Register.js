@@ -38,7 +38,7 @@ const Register = props => {
 							"Registered! Login to continue"
 						);
 						setTimeout(() => {
-							props.history.push("/");
+							props.history.push("/login");
 						}, 200);
 					}
 					setIsLoading(false);

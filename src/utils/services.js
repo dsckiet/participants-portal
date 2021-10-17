@@ -13,10 +13,12 @@ import {
 	MARK_ATTENDANCE,
 	GET_CERTI,
 	ADD_FEEDBACK,
-	GET_ATTENDANCE_REPORT
+	GET_ATTENDANCE_REPORT,
+	REGISTER_BOTH
 } from "./routes";
 
-const BASE_URL = "https://api.dsckiet.com/dev";
+//const BASE_URL = "https://api.dsckiet.com/dev";
+const BASE_URL = "https://b994-122-161-68-113.ngrok.io/api/v1";
 
 axios.defaults.baseURL = BASE_URL;
 
@@ -35,6 +37,20 @@ function setUserToken() {
 export async function registerService(data) {
 	try {
 		const response = await axios.post(REGISTER_PARTICIPANT, data);
+		if (response.status === 200 && response.data.error === false) {
+			return {
+				res: response.data,
+				token: response.headers["x-auth-token"]
+			};
+		} else return response.data;
+	} catch (err) {
+		return err.response.data;
+	}
+}
+
+export async function registerBothService(data) {
+	try {
+		const response = await axios.post(REGISTER_BOTH, data);
 		if (response.status === 200 && response.data.error === false) {
 			return {
 				res: response.data,

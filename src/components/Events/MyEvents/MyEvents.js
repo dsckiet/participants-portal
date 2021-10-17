@@ -30,14 +30,13 @@ const MyEvents = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	return (
-
 		<div className="all-Containers">
 			<PageTitle title="My Events" />
 			<Row gutter={[16, 16]}>
 				{myEvent.length !== 0 ? (
 					myEvent.map((event, id) => (
 						<Col xl={8} lg={12} md={12} sm={24} xs={24} key={id}>
-							<Link to={`/myEvents/${event.eid}`}>
+							<Link to={`/dashboard/myEvents/${event.eid}`}>
 								<Card className="event-card">
 									<h2>{event.details.title}</h2>
 									<Row>

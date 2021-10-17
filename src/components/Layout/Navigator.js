@@ -94,10 +94,9 @@ const Navigator = props => {
 									/>
 								) : null;
 							})}
-							<Redirect from="/dashboard" to="/" />
 							<Route
 								exact
-								path="/myEvents/:id"
+								path="/dashboard/myEvents/:id"
 								component={MyEventDetails}
 							/>
 						</Switch>
