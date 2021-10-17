@@ -60,7 +60,8 @@ const Landing = () => {
 								<div style={{ paddingRight: "4px" }}>-</div>
 								<p>
 									The participants who have attended all the
-									sessions will get certificate of excellence.
+									sessions will get certificate of
+									participation.
 								</p>
 							</div>
 							<div style={{ display: "flex" }}>
