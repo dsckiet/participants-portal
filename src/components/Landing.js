@@ -46,7 +46,7 @@ const Landing = () => {
 						<div style={{ fontSize: "18px", paddingTop: "16px" }}>
 							<p>
 								- It is going to be a 5-day full-stack web
-								development boot camp.
+								development bootcamp.
 							</p>
 							<p>
 								- It will be an offline event inside the college
@@ -60,7 +60,7 @@ const Landing = () => {
 								<div style={{ paddingRight: "4px" }}>-</div>
 								<p>
 									The participants who have attended all the
-									sessions will get awarded certification.
+									sessions will get certificate of excellence.
 								</p>
 							</div>
 							<div style={{ display: "flex" }}>
@@ -68,7 +68,7 @@ const Landing = () => {
 								<div>
 									The top participants will get awarded
 									appreciation certificates, swags, and the
-									opportunity to join our team.
+									opportunity to join us.
 								</div>
 							</div>
 						</div>

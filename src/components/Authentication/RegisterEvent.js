@@ -35,7 +35,7 @@ const Register = props => {
 						_notification(
 							"success",
 							"Success",
-							"Registered! Login to continue"
+							"Check your email for further information, also check your spam and promotions section."
 						);
 						setTimeout(() => {
 							props.history.push("/login");
