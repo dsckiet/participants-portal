@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Layout, Menu, Icon } from "antd";
 import routes from "../../utils/_routes";
-import { Redirect, Route, Switch, Link } from "react-router-dom";
+import { Route, Switch, Link } from "react-router-dom";
 import logo from "../../utils/assets/images/logo-white.svg";
 import MyEventDetails from "./../Events/MyEvents/MyEventDetails";
 
