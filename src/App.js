@@ -7,7 +7,9 @@ import {
 } from "react-router-dom";
 
 import Login from "./components/Authentication/Login";
+import Landing from "./components/Landing";
 import Register from "./components/Authentication/Register";
+import RegisterEvent from "./components/Authentication/RegisterEvent";
 import Navigator from "./components/Layout/Navigator";
 
 import "./App.css";
@@ -20,15 +22,17 @@ function App() {
 	return (
 		<Router>
 			<Switch>
+				<Route exact path="/" component={Landing} />
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/register" component={Register} />
+				<Route exact path="/register/event" component={RegisterEvent} />
 				<Route exact path="/forgot" component={ForgotPassword} />
 				<Route
 					exact
 					path="/reset/:id/:token"
 					component={ResetPassword}
 				/>
-				<PrivateRoute path="/" component={Navigator} />
+				<PrivateRoute path="/dashboard" component={Navigator} />
 			</Switch>
 		</Router>
 	);

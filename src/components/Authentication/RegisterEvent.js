@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Form, Input, Button, Card, Select, Row, Col, InputNumber } from "antd";
 import logo from "../../utils/assets/images/logo-black.svg";
-import { Link } from "react-router-dom";
 import "./style.css";
 import { _notification, GET_BRANCHES, GET_YEARS } from "../../utils/_helpers";
 import { registerService } from "../../utils/services";
@@ -157,9 +156,9 @@ const Register = props => {
 					</Form.Item>
 				</Form>
 			</Card>
-			<p style={{ textAlign: "center", marginTop: 12 }}>
+			{/* <p style={{ textAlign: "center", marginTop: 12 }}>
 				Have an account? <Link to="/login">Login here</Link>
-			</p>
+			</p> */}
 		</div>
 	);
 };

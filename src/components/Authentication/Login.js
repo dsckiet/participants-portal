@@ -22,7 +22,7 @@ const Login = props => {
 		const token = JSON.parse(localStorage.getItem("token"));
 		if (token) {
 			if (token.token !== "") {
-				props.history.push("/");
+				props.history.push("/dashboard");
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -53,7 +53,7 @@ const Login = props => {
 							password: ""
 						});
 						setTimeout(() => {
-							props.history.push("/");
+							props.history.push("/dashboard");
 						}, 200);
 					}
 					setIsLoading(false);
