@@ -19,6 +19,12 @@ const Register = props => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	_notification(
+		"success",
+		"Success",
+		"Check your email for further information, also check your spam and promotions section."
+	);
+
 	const handleSubmit = e => {
 		e.preventDefault();
 		setIsLoading(true);
@@ -35,7 +41,7 @@ const Register = props => {
 						_notification(
 							"success",
 							"Success",
-							"Registered! Login to continue"
+							"You have been registered as a participant on the website and as an attendee in the Web Development bootcamp. Check your emails for further information, also check your spam and promotions section."
 						);
 						setTimeout(() => {
 							props.history.push("/login");
