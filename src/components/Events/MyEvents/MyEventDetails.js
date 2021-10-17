@@ -35,6 +35,7 @@ const Wrapper = styled.div`
 
 const MyEventDetails = props => {
 	const [event, setEvent] = useState(null);
+	//eslint-disable-next-line
 	const [loading, setLoading] = useState(false);
 	const [viewDrawer, setViewDrawer] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
@@ -60,7 +61,7 @@ const MyEventDetails = props => {
 		})();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-
+	//eslint-disable-next-line
 	const generateCerti = async () => {
 		setLoading(true);
 		try {
@@ -154,9 +155,7 @@ const MyEventDetails = props => {
 	});
 
 	return (
-
 		<div className="all-Containers">
-
 			<PageTitle title="My Events" />
 			{event ? (
 				<Card bordered={false}>
@@ -217,14 +216,14 @@ const MyEventDetails = props => {
 										Feedback
 									</Button>
 									<br />
-									<Button
+									{/* <Button
 										type="primary"
 										style={{ marginTop: "8px" }}
 										onClick={generateCerti}
 										loading={loading}
 									>
 										Generate Certificate
-									</Button>
+									</Button> */}
 								</div>
 							</DescriptionContainer>
 						</Col>
@@ -257,7 +256,6 @@ const MyEventDetails = props => {
 				/>
 			</Drawer>
 		</div>
-
 	);
 };
 

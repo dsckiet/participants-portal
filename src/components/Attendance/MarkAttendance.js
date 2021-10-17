@@ -39,7 +39,8 @@ const MarkAttendance = props => {
 	};
 
 	const handleError = err => {
-		message.error(err);
+		message.error("Permission Denied !");
+		console.log(err);
 	};
 
 	const handleSubmit = e => {
@@ -82,7 +83,6 @@ const MarkAttendance = props => {
 
 	return (
 		<div className="all-Containers">
-
 			<PageTitle title="Attendance" />
 
 			<Card
@@ -100,6 +100,7 @@ const MarkAttendance = props => {
 								delay={300}
 								onError={handleError}
 								onScan={handleScan}
+								onLoad={object => console.log(object)}
 							/>
 						</Card>
 						<br />

@@ -30,7 +30,6 @@ const MyEvents = () => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	return (
-
 		<div className="all-Containers">
 			<PageTitle title="My Events" />
 			<Row gutter={[16, 16]}>

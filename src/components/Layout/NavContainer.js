@@ -113,7 +113,7 @@ const NavContainer = props => {
 									to="#"
 									onClick={() => {
 										localStorage.clear();
-										props.history.push("/login");
+										props.history.push("/");
 									}}
 								>
 									Sign Out

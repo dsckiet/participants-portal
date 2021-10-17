@@ -1,5 +1,6 @@
 /** PARTICIPANTS MODULE **/
 export const REGISTER_PARTICIPANT = "/events/participants"; // POST NEW
+export const REGISTER_BOTH = "/events/registerboth"; // POST NEW
 export const LOGIN_PARTICIPANT = "/events/participants/login"; // POST NEW
 export const FORGOTPASS = "/events/participants/forgot-pwd"; // POST NEW
 export const RESETPASS = "/events/participants/reset-pwd"; // POST NEW
