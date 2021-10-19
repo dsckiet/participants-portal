@@ -107,6 +107,7 @@ const UserProfile = () => {
 					key="1"
 					content={content}
 					placement="bottomRight"
+					aria-hidden={!showPop}
 				>
 					<Avatar
 						onClick={() => setShowPop(!showPop)}
@@ -121,7 +122,6 @@ const UserProfile = () => {
 				title="Update Profile"
 				placement="right"
 				closable={true}
-				width="30%"
 				destroyOnClose={true}
 				onClose={() => setProfileDrawer(false)}
 				visible={profileDrawer}

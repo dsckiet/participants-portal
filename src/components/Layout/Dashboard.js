@@ -38,14 +38,14 @@ const Dashboard = props => {
 
 	return (
 		<>
-			<div className="dashboard-section">
+			<div className="dashboard-section all-Containers">
 				<PageTitle title="Dashboard" />
 				<div className="sub-components">
 					<Row gutter={[16, 16]}>
-						<Col span={18}>
+						<Col lg={18} md={19} sm={18}>
 							<DashCards />
 						</Col>
-						<Col span={6}>
+						<Col lg={6} md={5} sm={6}>
 							<Card>
 								<h2 style={{ fontWeight: 700 }}>Todo</h2>
 								<hr />
