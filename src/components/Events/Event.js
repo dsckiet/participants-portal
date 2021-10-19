@@ -15,15 +15,8 @@ const Events = props => {
 	const [event] = useState(props.event);
 	const [showModal, setShowModal] = useState(false);
 
-	const {
-		title,
-		description,
-		time,
-		image,
-		startDate,
-		endDate,
-		venue
-	} = event;
+	const { title, description, time, image, startDate, endDate, venue } =
+		event;
 
 	const handleModal = value => {
 		setShowModal(value);
@@ -33,33 +26,6 @@ const Events = props => {
 		<>
 			<Col xl={8} lg={12} md={12} sm={24} xs={24}>
 				<Card className="event-card" onClick={() => handleModal(true)}>
-<<<<<<< HEAD
-					<h3>{title}</h3>
-
-					<p>
-						{venue} <span style={{ float: "right" }}>{time}</span>
-					</p>
-
-					<p>{description.slice(0, 60)} ...</p>
-					<p>
-						{new Date(startDate).toDateString()} to{" "}
-						{new Date(endDate).toDateString()}
-						{props.eventType ? (
-							<Tag
-								style={{
-									float: "right",
-									right: 0,
-									marginRight: 0
-								}}
-								color="#0f9d58"
-							>
-								{props.eventType &&
-									props.eventType.charAt(0).toUpperCase() +
-										props.eventType.slice(1)}
-							</Tag>
-						) : null}
-					</p>
-=======
 					<h2>{title}</h2>
 					<Row>
 						<Col xl={12} lg={12} md={12} sm={12} xs={24}>
@@ -92,7 +58,6 @@ const Events = props => {
 							) : null}
 						</Col>
 					</Row>
->>>>>>> 0a007f2d7428c83372831f72f76cdc1baec5a78a
 					<div
 						style={{
 							borderRadius: 4,

@@ -35,10 +35,7 @@ const Wrapper = styled.div`
 
 const MyEventDetails = props => {
 	const [event, setEvent] = useState(null);
-<<<<<<< HEAD
-=======
 	//eslint-disable-next-line
->>>>>>> 0a007f2d7428c83372831f72f76cdc1baec5a78a
 	const [loading, setLoading] = useState(false);
 	const [viewDrawer, setViewDrawer] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
@@ -64,11 +61,7 @@ const MyEventDetails = props => {
 		})();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-<<<<<<< HEAD
-
-=======
 	//eslint-disable-next-line
->>>>>>> 0a007f2d7428c83372831f72f76cdc1baec5a78a
 	const generateCerti = async () => {
 		setLoading(true);
 		try {
@@ -162,11 +155,7 @@ const MyEventDetails = props => {
 	});
 
 	return (
-<<<<<<< HEAD
-		<>
-=======
 		<div className="all-Containers">
->>>>>>> 0a007f2d7428c83372831f72f76cdc1baec5a78a
 			<PageTitle title="My Events" />
 			{event ? (
 				<Card bordered={false}>
@@ -227,22 +216,14 @@ const MyEventDetails = props => {
 										Feedback
 									</Button>
 									<br />
-<<<<<<< HEAD
-									<Button
-=======
 									{/* <Button
->>>>>>> 0a007f2d7428c83372831f72f76cdc1baec5a78a
 										type="primary"
 										style={{ marginTop: "8px" }}
 										onClick={generateCerti}
 										loading={loading}
 									>
 										Generate Certificate
-<<<<<<< HEAD
-									</Button>
-=======
 									</Button> */}
->>>>>>> 0a007f2d7428c83372831f72f76cdc1baec5a78a
 								</div>
 							</DescriptionContainer>
 						</Col>
@@ -265,10 +246,6 @@ const MyEventDetails = props => {
 				title="Feedback Form"
 				placement="right"
 				closable={true}
-<<<<<<< HEAD
-				width="35%"
-=======
->>>>>>> 0a007f2d7428c83372831f72f76cdc1baec5a78a
 				destroyOnClose={true}
 				onClose={() => setViewDrawer(false)}
 				visible={viewDrawer}
@@ -278,11 +255,7 @@ const MyEventDetails = props => {
 					onFeedbackSubmit={feedbackSubmit}
 				/>
 			</Drawer>
-<<<<<<< HEAD
-		</>
-=======
 		</div>
->>>>>>> 0a007f2d7428c83372831f72f76cdc1baec5a78a
 	);
 };
 

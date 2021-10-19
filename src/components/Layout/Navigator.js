@@ -4,11 +4,8 @@ import routes from "../../utils/_routes";
 import { Route, Switch, Link } from "react-router-dom";
 import logo from "../../utils/assets/images/logo-white.svg";
 import MyEventDetails from "./../Events/MyEvents/MyEventDetails";
-<<<<<<< HEAD
-=======
 
 import styled from "styled-components";
->>>>>>> 0a007f2d7428c83372831f72f76cdc1baec5a78a
 
 const { Content, Sider } = Layout;
 
@@ -23,18 +20,7 @@ const EditSider = styled(Sider)`
 `;
 
 const Navigator = props => {
-<<<<<<< HEAD
-	const [isCollapsed] = useState(true);
-	// const [show, setShow] = useState(true);
-	const routeKey = localStorage.getItem("routeKey");
-
-	// const handleMenu = () => {
-	// 	setIsCollapsed(!isCollapsed);
-	// 	setShow(!show);
-	// };
-=======
 	const [isCollapsed] = useState(false);
->>>>>>> 0a007f2d7428c83372831f72f76cdc1baec5a78a
 
 	return (
 		<>
@@ -79,35 +65,6 @@ const Navigator = props => {
 								props.history.push("/login");
 							}}
 						>
-<<<<<<< HEAD
-							{/* <Icon
-								className="trigger"
-								type={isCollapsed ? "menu-unfold" : "menu-fold"}
-								onClick={handleMenu}
-							/> */}
-							<Switch>
-								{routes.map((route, idx) => {
-									return route.component ? (
-										<Route
-											key={idx}
-											path={route.path}
-											exact={route.exact}
-											render={props => (
-												<route.component {...props} />
-											)}
-										/>
-									) : null;
-								})}
-								<Redirect from="/dashboard" to="/" />
-								<Route
-									exact
-									path="/myEvents/:id"
-									component={MyEventDetails}
-								/>
-							</Switch>
-						</Content>
-					</Layout>
-=======
 							<Icon type="lock" />
 							<span>Sign Out</span>
 						</Menu.Item>
@@ -144,7 +101,6 @@ const Navigator = props => {
 							/>
 						</Switch>
 					</Content>
->>>>>>> 0a007f2d7428c83372831f72f76cdc1baec5a78a
 				</Layout>
 			</Layout>
 		</>
