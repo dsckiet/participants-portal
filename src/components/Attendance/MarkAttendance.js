@@ -36,15 +36,16 @@ const MarkAttendance = props => {
 			setAttendanceCode(data);
 			try {
 				await markAttendanceService({ code: data });
-				message.success("Attendance marked successfully");
+				_notification("success", "Success", "Attendance Marked");
 			} catch (error) {
-				if (error.message) message.error(error.message);
+				if (error.message)
+					_notification("error", "Error", error.message);
 			}
 		}
 	};
 
 	const handleError = err => {
-		message.error("Permission Denied !");
+		_notification("error", "Error", "Camera Permission Denied !");
 		console.log(err);
 	};
 
@@ -55,23 +56,10 @@ const MarkAttendance = props => {
 		props.form.validateFields(async (err, values) => {
 			if (!err) {
 				try {
-					const res = await markAttendanceService(values);
-					console.log(res);
-					if (res.error) {
-						_notification("error", "Error", res.message);
-						props.form.setFieldsValue({
-							code: ""
-						});
-					} else if (res.message === "success") {
-						_notification(
-							"success",
-							"Success",
-							"Attendance Marked"
-						);
-						props.form.setFieldsValue({
-							code: ""
-						});
-					}
+					await handleScan(values.code);
+					props.form.setFieldsValue({
+						code: ""
+					});
 					setIsLoading(false);
 				} catch (err) {
 					props.form.setFieldsValue({

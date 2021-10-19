@@ -216,14 +216,14 @@ const MyEventDetails = props => {
 										Feedback
 									</Button>
 									<br />
-									{/* <Button
+									<Button
 										type="primary"
 										style={{ marginTop: "8px" }}
 										onClick={generateCerti}
 										loading={loading}
 									>
 										Generate Certificate
-									</Button> */}
+									</Button>
 								</div>
 							</DescriptionContainer>
 						</Col>
