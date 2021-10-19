@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Button } from "antd";
+import { Button, Popover } from "antd";
 import demo from "../utils/assets/images/demo.png";
 
 const Landing = () => {
@@ -98,21 +98,23 @@ const Landing = () => {
 						>
 							October 21 - October 26, 2021
 						</div>
-
-						<Button
-							style={{
-								width: "100%",
-								fontSize: "16px",
-								marginBottom: "16px"
-							}}
-							size="large"
-							type="primary"
-							onClick={() => {
-								history.push("/register/web-bootcamp");
-							}}
-						>
-							Register
-						</Button>
+						<Popover content="Apologies! Registrations are closed for this event. We have limited seats. See you in next event:)">
+							<Button
+								style={{
+									width: "100%",
+									fontSize: "16px",
+									marginBottom: "16px"
+								}}
+								size="large"
+								type="primary"
+								disabled={true}
+								onClick={() => {
+									history.push("/register/web-bootcamp");
+								}}
+							>
+								Register
+							</Button>
+						</Popover>
 					</div>
 				</div>
 			</section>
