@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PageTitle from "./../Layout/PageTitle";
 import styled from "styled-components";
 import QrReader from "react-qr-reader";
-import { Card, Form, Button, Input, message } from "antd";
+import { Card, Form, Button, Input } from "antd";
 import { markAttendanceService } from "../../utils/services";
 import { _notification } from "./../../utils/_helpers";
 
@@ -27,19 +27,25 @@ const QrrReader = styled(QrReader)`
 
 const MarkAttendance = props => {
 	const [isLoading, setIsLoading] = useState(false);
+	const [attendanceCode, setAttendanceCode] = useState("");
 	const { getFieldDecorator } = props.form;
 
-	const handleScan = data => {
-		if (data) {
-			message.success("Scan successfully");
-			props.form.setFieldsValue({
-				code: data
-			});
+	const handleScan = async data => {
+		// console.log(data);
+		if (data && data !== attendanceCode) {
+			setAttendanceCode(data);
+			try {
+				await markAttendanceService({ code: data });
+				_notification("success", "Success", "Attendance Marked");
+			} catch (error) {
+				if (error.message)
+					_notification("error", "Error", error.message);
+			}
 		}
 	};
 
 	const handleError = err => {
-		message.error("Permission Denied !");
+		_notification("error", "Error", "Camera Permission Denied !");
 		console.log(err);
 	};
 
@@ -50,23 +56,10 @@ const MarkAttendance = props => {
 		props.form.validateFields(async (err, values) => {
 			if (!err) {
 				try {
-					const res = await markAttendanceService(values);
-					console.log(res);
-					if (res.error) {
-						_notification("error", "Error", res.message);
-						props.form.setFieldsValue({
-							code: ""
-						});
-					} else if (res.message === "success") {
-						_notification(
-							"success",
-							"Success",
-							"Attendance Marked"
-						);
-						props.form.setFieldsValue({
-							code: ""
-						});
-					}
+					await handleScan(values.code);
+					props.form.setFieldsValue({
+						code: ""
+					});
 					setIsLoading(false);
 				} catch (err) {
 					props.form.setFieldsValue({
@@ -94,7 +87,10 @@ const MarkAttendance = props => {
 			>
 				<Container>
 					<div>
-						<Card bordered={false} style={{ borderRadius: "4px" }}>
+						<Card
+							bordered={false}
+							style={{ borderRadius: "4px", padding: "-2px" }}
+						>
 							<Heading>Scan QR code</Heading>
 							<QrrReader
 								delay={300}

@@ -15,15 +15,8 @@ const Events = props => {
 	const [event] = useState(props.event);
 	const [showModal, setShowModal] = useState(false);
 
-	const {
-		title,
-		description,
-		time,
-		image,
-		startDate,
-		endDate,
-		venue
-	} = event;
+	const { title, description, time, image, startDate, endDate, venue } =
+		event;
 
 	const handleModal = value => {
 		setShowModal(value);

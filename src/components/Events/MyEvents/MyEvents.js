@@ -17,6 +17,7 @@ const Time = styled.p`
 const MyEvents = () => {
 	const [myEvent, setMyEvent] = useState([]);
 	const [userData] = useState(getRole());
+
 	useEffect(() => {
 		(async () => {
 			try {
@@ -29,6 +30,9 @@ const MyEvents = () => {
 		})();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	console.log(myEvent);
+
 	return (
 		<div className="all-Containers">
 			<PageTitle title="My Events" />
