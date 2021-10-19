@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PageTitle from "./../Layout/PageTitle";
 import styled from "styled-components";
 import QrReader from "react-qr-reader";
-import { Card, Form, Button, Input, message } from "antd";
+import { Card, Form, Button, Input } from "antd";
 import { markAttendanceService } from "../../utils/services";
 import { _notification } from "./../../utils/_helpers";
 

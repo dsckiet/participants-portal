@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PageTitle from "./../../Layout/PageTitle";
-import { Card, Row, Col, Button, Tag, Drawer, Table } from "antd";
+import { Card, Row, Col, Button, Tag, Drawer, Table, Popover } from "antd";
 import { getEventService } from "../../../utils/services";
 import { _notification } from "./../../../utils/_helpers";
 import styled from "styled-components";
@@ -10,7 +10,7 @@ import {
 	generateCertificateService,
 	attendanceReportService
 } from "./../../../utils/services";
-import FeedbackForm from "./Feedback";
+import FeedbackForm from "./FeedbackForm";
 import moment from "moment";
 
 const Heading = styled.h4`
@@ -40,6 +40,7 @@ const MyEventDetails = props => {
 	const [viewDrawer, setViewDrawer] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [data, setData] = useState([]);
+	const [report, setReport] = useState(null);
 
 	useEffect(() => {
 		setIsLoading(true);
@@ -47,8 +48,10 @@ const MyEventDetails = props => {
 			try {
 				const res = await getEventService(props.match.params.id);
 				setEvent(res.data);
+				console.log(res);
 				let params = { eid: props.match.params.id };
 				const response = await attendanceReportService(params);
+				setReport(response.data);
 				let date = [];
 				date = response.data.attendance.map(d => {
 					return d.split("T")[0];
@@ -154,6 +157,8 @@ const MyEventDetails = props => {
 		return { index: ++id, key: ++id, status, date };
 	});
 
+	console.log(report);
+
 	return (
 		<div className="all-Containers">
 			<PageTitle title="My Events" />
@@ -209,21 +214,43 @@ const MyEventDetails = props => {
 								<DescHeading>Description</DescHeading>
 								<p>{event.description}</p>
 								<div>
-									<Button
-										type="dashed"
-										onClick={() => setViewDrawer(true)}
-									>
-										Feedback
-									</Button>
+									{report && report.attendance.length ? (
+										<Button
+											type="dashed"
+											onClick={() => setViewDrawer(true)}
+										>
+											Feedback
+										</Button>
+									) : null}
 									<br />
-									<Button
-										type="primary"
-										style={{ marginTop: "8px" }}
-										onClick={generateCerti}
-										loading={loading}
+									<Popover
+										placement="bottom"
+										content={
+											!(
+												report &&
+												report.attendance.length ===
+													report.event.days
+											)
+												? "Please attend all days of the event to get the certificate."
+												: "YaY! Got the certificate"
+										}
 									>
-										Generate Certificate
-									</Button>
+										<Button
+											type="primary"
+											style={{ marginTop: "8px" }}
+											onClick={generateCerti}
+											loading={loading}
+											disabled={
+												!(
+													report &&
+													report.attendance.length ===
+														report.event.days
+												)
+											}
+										>
+											Generate Certificate
+										</Button>
+									</Popover>
 								</div>
 							</DescriptionContainer>
 						</Col>
