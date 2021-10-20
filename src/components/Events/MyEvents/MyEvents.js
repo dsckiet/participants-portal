@@ -101,6 +101,22 @@ const MyEvents = () => {
 											>
 												{event.status.toUpperCase()}
 											</Tag>
+											<Tag
+												style={{
+													float: "right",
+													marginBottom: 8
+												}}
+												color={
+													event.isRsvpAccepted
+														? "green"
+														: "red"
+												}
+											>
+												RSVP:{" "}
+												{event.isRsvpAccepted
+													? "ACCEPTED"
+													: "NOT ACCEPTED"}
+											</Tag>
 										</Col>
 									</Row>
 

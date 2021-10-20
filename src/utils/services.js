@@ -14,7 +14,8 @@ import {
 	GET_CERTI,
 	ADD_FEEDBACK,
 	GET_ATTENDANCE_REPORT,
-	REGISTER_BOTH
+	REGISTER_BOTH,
+	UPDATE_RSVP
 } from "./routes";
 
 const BASE_URL =
@@ -193,6 +194,17 @@ export const attendanceReportService = async params => {
 	setUserToken();
 	try {
 		const response = await axios.get(GET_ATTENDANCE_REPORT, { params });
+		return response.data;
+	} catch (err) {
+		if (err.response) throw err.response.data;
+		else throw err.message;
+	}
+};
+
+export const updateRsvpService = async params => {
+	setUserToken();
+	try {
+		const response = await axios.post(UPDATE_RSVP, params);
 		return response.data;
 	} catch (err) {
 		if (err.response) throw err.response.data;
