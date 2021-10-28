@@ -148,8 +148,13 @@ export const markAttendanceService = async data => {
 export const generateCertificateService = async id => {
 	setUserToken();
 	try {
-		const response = await axios.get(`${GET_CERTI}/${id}`);
-		return response.data;
+		const response = await axios.get(`${GET_CERTI}/${id}`, {
+			responseType: "blob" //Force to receive data in a Blob Format
+		});
+		const file = new Blob([response.data], { type: "application/pdf" });
+		//Build a URL from the file
+		const fileURL = URL.createObjectURL(file);
+		window.open(fileURL);
 	} catch (err) {
 		if (err.response) throw err.response.data;
 		else throw err.message;
