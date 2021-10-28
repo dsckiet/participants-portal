@@ -76,12 +76,12 @@ const MyEventDetails = props => {
 		setLoading(true);
 		try {
 			let id = props.match.params.id;
-			const res = await generateCertificateService(id);
-			if (res.message === "success") {
-				_notification("success", "Success", "Download success");
-			} else {
-				_notification("error", "Error", res.message);
-			}
+			await generateCertificateService(id);
+			// if (res.message === "success") {
+			// 	_notification("success", "Success", "Download success");
+			// } else {
+			// 	_notification("error", "Error", res.message);
+			// }
 			setLoading(false);
 		} catch (err) {
 			_notification("warning", "Error", err.message);
@@ -125,10 +125,11 @@ const MyEventDetails = props => {
 	const dataCalc = (event, attendance) => {
 		let data = [];
 		if (event) {
-			var start = new Date(event.startDate);
-			var end = new Date(event.endDate);
+			let start = new Date(event.startDate);
+			let end = new Date(event.endDate);
 			let status;
-			for (var d = start; d <= end; d.setDate(d.getDate() + 1)) {
+			console.log(start);
+			for (let d = start; d <= end; d.setDate(d.getDate() + 1)) {
 				if (
 					attendance.includes(
 						moment(new Date(d)).format("YYYY-MM-DD")
