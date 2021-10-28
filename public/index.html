@@ -57,7 +57,8 @@
 		/>
 		<meta property="twitter:image" content="android-chrome-512x512.png" />
 		<script>
-			console.log = console.warn = console.error = () => {};
+			if (window.location.host === "events.dsckiet.com")
+				console.log = console.warn = console.error = () => {};
 		</script>
 	</head>
 	<body>
