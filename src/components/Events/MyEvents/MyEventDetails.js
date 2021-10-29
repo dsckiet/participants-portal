@@ -256,9 +256,9 @@ const MyEventDetails = props => {
 											loading={loading}
 											disabled={
 												!(
-													report &&
-													report.attendance.length ===
-														report.event.days
+													participantEvent &&
+													participantEvent.status ===
+														"attended"
 												)
 											}
 										>
