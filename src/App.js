@@ -17,7 +17,7 @@ import "./custom-antd.css";
 import { AuthContext } from "./contexts/userContext";
 import ForgotPassword from "./components/Authentication/ForgotPassword";
 import ResetPassword from "./components/Authentication/ResetPassword";
-import Rsvp from "./components/Rsvp";
+// import Rsvp from "./components/Rsvp";
 
 function App() {
 	return (
