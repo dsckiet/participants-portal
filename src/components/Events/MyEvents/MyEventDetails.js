@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import PageTitle from "./../../Layout/PageTitle";
-import { Card, Row, Col, Button, Tag, Drawer, Table } from "antd";
-import { getEventService } from "../../../utils/services";
+import { Card, Row, Col, Button, Tag, Drawer, Table, Popover } from "antd";
+import { getParticipantService, getRole } from "../../../utils/services";
 import { _notification } from "./../../../utils/_helpers";
 import styled from "styled-components";
 import { MdLocationOn, MdDateRange } from "react-icons/md";
@@ -10,7 +10,7 @@ import {
 	generateCertificateService,
 	attendanceReportService
 } from "./../../../utils/services";
-import FeedbackForm from "./Feedback";
+import FeedbackForm from "./FeedbackForm";
 import moment from "moment";
 
 const Heading = styled.h4`
@@ -34,26 +34,36 @@ const Wrapper = styled.div`
 `;
 
 const MyEventDetails = props => {
-	const [event, setEvent] = useState(null);
 	//eslint-disable-next-line
 	const [loading, setLoading] = useState(false);
 	const [viewDrawer, setViewDrawer] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const [data, setData] = useState([]);
+	const [report, setReport] = useState(null);
+	const [participantEvent, setParticipantEvent] = useState(null);
+	const [userData] = useState(getRole());
 
 	useEffect(() => {
 		setIsLoading(true);
 		(async () => {
 			try {
-				const res = await getEventService(props.match.params.id);
-				setEvent(res.data);
-				let params = { eid: props.match.params.id };
+				const eid = props.match.params.id;
+				const participantProfileRes = await getParticipantService({
+					pid: userData.id
+				});
+				const _participantEvent =
+					participantProfileRes.data.events.filter(
+						event => event.eid === eid
+					)[0];
+				setParticipantEvent(_participantEvent);
+				let params = { eid };
 				const response = await attendanceReportService(params);
+				setReport(response.data);
 				let date = [];
 				date = response.data.attendance.map(d => {
 					return d.split("T")[0];
 				});
-				setData(dataCalc(res.data, date));
+				setData(dataCalc(response.data.event, date));
 				setIsLoading(false);
 			} catch (err) {
 				_notification("warning", "Error", err.message);
@@ -66,12 +76,12 @@ const MyEventDetails = props => {
 		setLoading(true);
 		try {
 			let id = props.match.params.id;
-			const res = await generateCertificateService(id);
-			if (res.message === "success") {
-				_notification("success", "Success", "Download success");
-			} else {
-				_notification("error", "Error", res.message);
-			}
+			await generateCertificateService(id);
+			// if (res.message === "success") {
+			// 	_notification("success", "Success", "Download success");
+			// } else {
+			// 	_notification("error", "Error", res.message);
+			// }
 			setLoading(false);
 		} catch (err) {
 			_notification("warning", "Error", err.message);
@@ -115,10 +125,11 @@ const MyEventDetails = props => {
 	const dataCalc = (event, attendance) => {
 		let data = [];
 		if (event) {
-			var start = new Date(event.startDate);
-			var end = new Date(event.endDate);
+			let start = new Date(event.startDate);
+			let end = new Date(event.endDate);
 			let status;
-			for (var d = start; d <= end; d.setDate(d.getDate() + 1)) {
+			console.log(start);
+			for (let d = start; d <= end; d.setDate(d.getDate() + 1)) {
 				if (
 					attendance.includes(
 						moment(new Date(d)).format("YYYY-MM-DD")
@@ -157,14 +168,18 @@ const MyEventDetails = props => {
 	return (
 		<div className="all-Containers">
 			<PageTitle title="My Events" />
-			{event ? (
+			{report && report.event ? (
 				<Card bordered={false}>
 					<Row gutter={[16, 16]}>
 						<Col xl={4} lg={8} md={8} sm={24} xs={24}>
-							<img src={event.image} alt="pic" width="100%" />
+							<img
+								src={report.event.image}
+								alt="pic"
+								width="100%"
+							/>
 						</Col>
 						<Col xl={10} lg={8} md={8} sm={24} xs={24}>
-							<Heading>{event.title}</Heading>
+							<Heading>{report.event.title}</Heading>
 							<Wrapper>
 								<div
 									style={{
@@ -174,7 +189,7 @@ const MyEventDetails = props => {
 								>
 									<MdLocationOn />
 								</div>
-								<p>{event.venue}</p>
+								<p>{report.event.venue}</p>
 							</Wrapper>
 							<Wrapper>
 								<div
@@ -186,7 +201,7 @@ const MyEventDetails = props => {
 								>
 									<IoIosTime />
 								</div>
-								<p>{event.time}</p>
+								<p>{report.event.time}</p>
 							</Wrapper>
 							<Wrapper>
 								<div
@@ -199,31 +214,58 @@ const MyEventDetails = props => {
 									<MdDateRange />
 								</div>
 								<p>
-									{new Date(event.startDate).toDateString()}{" "}
-									to {new Date(event.endDate).toDateString()}
+									{new Date(
+										report.event.startDate
+									).toDateString()}{" "}
+									to{" "}
+									{new Date(
+										report.event.endDate
+									).toDateString()}
 								</p>
 							</Wrapper>
 						</Col>
 						<Col xl={10} lg={8} md={8} sm={24} xs={24}>
 							<DescriptionContainer>
 								<DescHeading>Description</DescHeading>
-								<p>{event.description}</p>
+								<p>{report.event.description}</p>
 								<div>
-									<Button
-										type="dashed"
-										onClick={() => setViewDrawer(true)}
-									>
-										Feedback
-									</Button>
+									{report && report.attendance.length ? (
+										<Button
+											type="dashed"
+											onClick={() => setViewDrawer(true)}
+										>
+											Feedback
+										</Button>
+									) : null}
 									<br />
-									{/* <Button
-										type="primary"
-										style={{ marginTop: "8px" }}
-										onClick={generateCerti}
-										loading={loading}
+									<Popover
+										placement="bottom"
+										content={
+											!(
+												participantEvent &&
+												participantEvent.status ===
+													"attended"
+											)
+												? "Please attend all days of the event to get the certificate."
+												: "YaY! Got the certificate"
+										}
 									>
-										Generate Certificate
-									</Button> */}
+										<Button
+											type="primary"
+											style={{ marginTop: "8px" }}
+											onClick={generateCerti}
+											loading={loading}
+											disabled={
+												!(
+													participantEvent &&
+													participantEvent.status ===
+														"attended"
+												)
+											}
+										>
+											Generate Certificate
+										</Button>
+									</Popover>
 								</div>
 							</DescriptionContainer>
 						</Col>

@@ -44,6 +44,8 @@ const EventsList = props => {
 		})();
 	}, []);
 
+	console.log(events);
+
 	return (
 		<div className="all-Containers">
 			<PageTitle title="Events" />

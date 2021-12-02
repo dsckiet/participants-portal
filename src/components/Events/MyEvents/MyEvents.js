@@ -17,6 +17,7 @@ const Time = styled.p`
 const MyEvents = () => {
 	const [myEvent, setMyEvent] = useState([]);
 	const [userData] = useState(getRole());
+
 	useEffect(() => {
 		(async () => {
 			try {
@@ -29,6 +30,9 @@ const MyEvents = () => {
 		})();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	console.log(myEvent);
+
 	return (
 		<div className="all-Containers">
 			<PageTitle title="My Events" />
@@ -96,6 +100,22 @@ const MyEvents = () => {
 												color="#0f9d58"
 											>
 												{event.status.toUpperCase()}
+											</Tag>
+											<Tag
+												style={{
+													float: "right",
+													marginBottom: 8
+												}}
+												color={
+													event.isRsvpAccepted
+														? "green"
+														: "red"
+												}
+											>
+												RSVP:{" "}
+												{event.isRsvpAccepted
+													? "ACCEPTED"
+													: "NOT ACCEPTED"}
 											</Tag>
 										</Col>
 									</Row>

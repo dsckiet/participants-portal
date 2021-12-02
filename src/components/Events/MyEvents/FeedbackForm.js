@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Button, Radio, Rate } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import { _notification } from "./../../../utils/_helpers";
+import { _notification } from "../../../utils/_helpers";
 import { submitFeedbackService } from "../../../utils/services";
 
 const radioStyle = {
