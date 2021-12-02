@@ -9,6 +9,7 @@ import {
 	getRole
 } from "./../../utils/services";
 import { _notification } from "./../../utils/_helpers";
+import ReactMarkdown from "react-markdown";
 
 const Heading = styled.h4`
 	font-weight: bold;
@@ -85,6 +86,7 @@ const EventDetails = ({ visible, handleModal, event, eventType }) => {
 		try {
 			const body = { eid: _id };
 			const res = await registerEventService(body);
+
 			if (res.message === "success") {
 				_notification("success", "Success", "Registration Successful!");
 				toggleRefresh(!refresh);
@@ -209,7 +211,7 @@ const EventDetails = ({ visible, handleModal, event, eventType }) => {
 				</Wrapper>
 				<DescriptionContainer>
 					<DescHeading>Description</DescHeading>
-					<p>{description}</p>
+					<ReactMarkdown>{description}</ReactMarkdown>
 				</DescriptionContainer>
 			</Modal>
 		</>

@@ -9,7 +9,7 @@ import {
 import Login from "./components/Authentication/Login";
 import Landing from "./components/Landing";
 import Register from "./components/Authentication/Register";
-import RegisterEvent from "./components/Authentication/RegisterEvent";
+// import RegisterEvent from "./components/Authentication/RegisterEvent";
 import Navigator from "./components/Layout/Navigator";
 
 import "./App.css";
@@ -17,31 +17,26 @@ import "./custom-antd.css";
 import { AuthContext } from "./contexts/userContext";
 import ForgotPassword from "./components/Authentication/ForgotPassword";
 import ResetPassword from "./components/Authentication/ResetPassword";
-import Rsvp from "./components/Rsvp";
+// import Rsvp from "./components/Rsvp";
 
 function App() {
 	return (
 		<Router>
 			<Switch>
-				<Route exact path="/web-bootcamp" component={Landing} />
 				<Route exact path="/login" component={Login} />
 				<Route exact path="/register" component={Register} />
-				<Route
+				{/* <Route
 					exact
 					path="/register/web-bootcamp"
 					component={RegisterEvent}
-				/>
+				/> */}
 				<Route exact path="/forgot" component={ForgotPassword} />
 				<Route
 					exact
 					path="/reset/:id/:token"
 					component={ResetPassword}
 				/>
-				<Route
-					exact
-					path="/update-rsvp/:oid/:eid/:pid"
-					component={Rsvp}
-				/>
+				<Route exact path="/event/:slug" component={Landing} />
 				<PrivateRoute path="/" component={Navigator} />
 			</Switch>
 		</Router>

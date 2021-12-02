@@ -102,6 +102,37 @@ body {
 	padding-bottom: 20px;
 }
 
+.tab {
+	width: 50%;
+	display: flex;
+	justify-content: center;
+	padding: 8px;
+	border-radius: 4px;
+	margin: 0px 4px;
+	cursor: pointer;
+	transition: 0.25s;
+	z-index: 2;
+}
+
+.active-tab {
+	color: #ffffff;
+}
+
+.glider {
+	position: absolute;
+	width: 48.8%;
+	height: 100%;
+	padding: 8px;
+	border-radius: 4px;
+	margin: 0px 4px;
+	background-color: #1890ff;
+	transition: ease-in-out 0.25s;
+}
+
+.glider-active {
+	transform: translateX(100%);
+}
+
 @media (min-width: 768px) {
 	.left {
 		width: 41.6667%;

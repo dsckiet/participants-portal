@@ -15,8 +15,7 @@ const Events = props => {
 	const [event] = useState(props.event);
 	const [showModal, setShowModal] = useState(false);
 
-	const { title, description, time, image, startDate, endDate, venue } =
-		event;
+	const { title, time, image, startDate, endDate, venue } = event;
 
 	const handleModal = value => {
 		setShowModal(value);
@@ -35,7 +34,7 @@ const Events = props => {
 							<Time>{time}</Time>
 						</Col>
 					</Row>
-					<p>{description.slice(0, 50)} ...</p>
+
 					<Row>
 						<Col xl={10} lg={12} md={12} sm={12} xs={24}>
 							<p>

@@ -33,6 +33,7 @@ const EventsList = props => {
 			try {
 				const { data } = await getEventsService();
 				console.log(data);
+				// console.log(data);
 				setEvents(data.upcomingEvents);
 				setEventType("upcoming");
 				setAllEvents(data);
