@@ -1,26 +1,191 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { Button } from "antd";
-import demo from "../utils/assets/images/demo.png";
+import {
+	Button,
+	Form,
+	Input,
+	Icon,
+	Row,
+	Col,
+	InputNumber,
+	Spin,
+	Select
+} from "antd";
+import { Link } from "react-router-dom";
+import { GET_BRANCHES, GET_YEARS, _notification } from "../utils/_helpers";
+import {
+	getEventsService,
+	loginService,
+	registerBothService,
+	registerEventService
+} from "../utils/services";
+import { DispatchContext } from "../contexts/userContext";
+import ReactMarkdown from "react-markdown";
+import moment from "moment";
+const { Option } = Select;
 
-const Landing = () => {
+const Landing = props => {
 	const history = useHistory();
+	const [active, setActive] = useState(0);
+	const { getFieldDecorator } = props.form;
+	const Dispatch = useContext(DispatchContext);
+	const [isLoading, setIsLoading] = useState(false);
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const [eventData, setEventData] = useState(null);
+	const [pageLoading, setPageLoading] = useState(false);
+	const { slug } = props.match.params;
 
 	useEffect(() => {
 		const token = JSON.parse(localStorage.getItem("token"));
 		if (token) {
 			if (token.token !== "") {
-				history.push("/");
+				setIsLoggedIn(true);
 			}
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-	return (
+
+	useEffect(() => {
+		(async () => {
+			setPageLoading(true);
+			try {
+				const res = await getEventsService();
+				console.log(res);
+				if (res.message === "success" && !res.error) {
+					const event = res.data.allEvents.filter(
+						obj => obj?.slug === slug
+					);
+					if (event.length === 0) {
+						_notification(
+							"warning",
+							"Error",
+							"No such event exixts, Please check the link "
+						);
+						history.push("/");
+					} else {
+						setEventData(event[0]);
+						setPageLoading(false);
+					}
+				}
+			} catch (err) {
+				_notification("warning", "Error", err.message);
+			}
+		})();
+		//eslint-disable-next-line
+	}, []);
+
+	const handleLogin = e => {
+		e.preventDefault();
+		setIsLoading(true);
+
+		props.form.validateFields(async (err, values) => {
+			if (!err) {
+				try {
+					const res = await loginService(values);
+
+					if (res.error) {
+						_notification("error", "Error", res.message);
+						props.form.setFieldsValue({
+							password: ""
+						});
+					} else if (res.res.message === "success") {
+						Dispatch({
+							type: "IN",
+							token: res.token
+						});
+						_notification("success", "Success", "Logged In");
+						props.form.setFieldsValue({
+							email: "",
+							password: ""
+						});
+						setTimeout(() => {
+							props.history.push("/");
+						}, 200);
+					}
+					setIsLoading(false);
+				} catch (err) {
+					props.form.setFieldsValue({
+						password: ""
+					});
+					_notification("error", "Error", err.message);
+					setIsLoading(false);
+				}
+			} else {
+				setIsLoading(false);
+			}
+		});
+	};
+
+	const handleRegisterEvent = async () => {
+		setIsLoading(true);
+		try {
+			const body = { eid: eventData._id };
+			const res = await registerEventService(body);
+
+			if (res.message === "success") {
+				_notification("success", "Success", "Registration Successful!");
+				history.push("/dashboard");
+			} else {
+				_notification("error", "Error", res.message);
+			}
+			setIsLoading(false);
+		} catch (err) {
+			_notification("warning", "Error", err.message);
+			setIsLoading(false);
+		}
+	};
+
+	const handleRegisterBoth = e => {
+		e.preventDefault();
+		setIsLoading(true);
+
+		props.form.validateFields(async (err, values) => {
+			if (!err) {
+				values["eid"] = eventData._id;
+				try {
+					const res = await registerBothService(values);
+
+					if (res.error) {
+						_notification("error", "Error", res.message);
+					} else if (res.res.message === "success") {
+						_notification(
+							"success",
+							"Success",
+							"Check your email for further information, also check your spam and promotions section."
+						);
+						setTimeout(() => {
+							props.history.push("/login");
+						}, 200);
+					}
+					setIsLoading(false);
+				} catch (err) {
+					_notification("error", "Error", err.message);
+					setIsLoading(false);
+				}
+			} else {
+				setIsLoading(false);
+			}
+		});
+	};
+
+	return pageLoading ? (
+		<div
+			style={{
+				height: "100vh",
+				width: "100%",
+				display: "flex",
+				justifyContent: "center",
+				alignItems: "center"
+			}}
+		>
+			<Spin />
+		</div>
+	) : (
 		<>
 			<section className="cntnr">
 				<div style={{ padding: "40px 20px 20px 20px" }}>
 					<img
-						src={demo}
+						src={eventData && eventData.image}
 						alt=""
 						width="100%"
 						style={{
@@ -41,37 +206,12 @@ const Landing = () => {
 						}}
 					>
 						<div style={{ fontSize: "28px", fontWeight: "600" }}>
-							Bootcamp Details
+							Event Details
 						</div>
 						<div style={{ fontSize: "18px", paddingTop: "16px" }}>
-							<p>
-								- It is going to be a 5-day full-stack web
-								development bootcamp.
-							</p>
-							<p>
-								- It will be an offline event inside the college
-								campus.
-							</p>
-							<p>
-								- The event is exclusive for KIET Group Of
-								Institutions students.
-							</p>
-							<div style={{ display: "flex" }}>
-								<div style={{ paddingRight: "4px" }}>-</div>
-								<p>
-									The participants who have attended all the
-									sessions will get certificate of
-									participation.
-								</p>
-							</div>
-							<div style={{ display: "flex" }}>
-								<div style={{ paddingRight: "4px" }}>-</div>
-								<div>
-									The top participants will get awarded
-									appreciation certificates, swags, and the
-									opportunity to join us.
-								</div>
-							</div>
+							<ReactMarkdown>
+								{eventData && eventData.description}
+							</ReactMarkdown>
 						</div>
 					</div>
 				</div>
@@ -85,10 +225,11 @@ const Landing = () => {
 						<div
 							style={{
 								fontSize: "28px",
-								fontWeight: "600"
+								fontWeight: "600",
+								textTransform: "capitalize"
 							}}
 						>
-							Web Development Bootcamp
+							{eventData && eventData.title}
 						</div>
 						<div
 							style={{
@@ -96,23 +237,302 @@ const Landing = () => {
 								padding: "16px 0px 24px 0px"
 							}}
 						>
-							October 21 - October 26, 2021
+							{eventData &&
+								`${moment(
+									eventData.startDate.split("T")[0]
+								).format("DD MMMM YY")} - ${moment(
+									eventData.endDate.split("T")[0]
+								).format("DD MMMM YY")}`}
 						</div>
+						{isLoggedIn ? (
+							<Button
+								style={{
+									width: "100%",
+									fontSize: "16px",
+									marginBottom: "16px"
+								}}
+								size="large"
+								type="primary"
+								onClick={handleRegisterEvent}
+							>
+								Register
+							</Button>
+						) : (
+							<>
+								<div
+									style={{
+										fontSize: "16px",
+										padding: "4px 0px",
+										border: "2px solid #E8E8E8",
+										borderRadius: "4px"
+									}}
+								>
+									<div
+										style={{
+											display: "flex",
+											width: "100%",
+											position: "relative"
+										}}
+									>
+										<div
+											onClick={() => setActive(0)}
+											className={`tab ${
+												active === 0 && "active-tab"
+											}`}
+										>
+											Register
+										</div>
+										<div
+											onClick={() => setActive(1)}
+											className={`tab ${
+												active === 1 && "active-tab"
+											}`}
+										>
+											Log in
+										</div>
+										<div
+											className={`glider ${
+												active === 1 && "glider-active"
+											}`}
+										/>
+									</div>
+								</div>
+								<div style={{ marginTop: "16px" }}>
+									{active === 0 ? (
+										<Form
+											onSubmit={handleRegisterBoth}
+											style={{ marginTop: "28px" }}
+										>
+											<Form.Item>
+												{getFieldDecorator("name", {
+													rules: [
+														{
+															required: true,
+															message:
+																"Please input your name!"
+														}
+													]
+												})(
+													<Input
+														type="text"
+														placeholder="Name"
+													/>
+												)}
+											</Form.Item>
+											<Form.Item>
+												{getFieldDecorator("email", {
+													rules: [
+														{
+															type: "email",
+															required: true,
+															message:
+																"Please input your email!"
+														}
+													]
+												})(
+													<Input
+														type="email"
+														placeholder="Email"
+													/>
+												)}
+											</Form.Item>
+											<Form.Item>
+												{getFieldDecorator("phone", {
+													rules: [
+														{
+															required: true,
+															message:
+																"Please input your phone number!"
+														}
+													]
+												})(
+													<InputNumber
+														minLength={10}
+														maxLength={10}
+														style={{
+															width: "100%"
+														}}
+														placeholder="Phone no."
+													/>
+												)}
+											</Form.Item>
 
-						<Button
-							style={{
-								width: "100%",
-								fontSize: "16px",
-								marginBottom: "16px"
-							}}
-							size="large"
-							type="primary"
-							onClick={() => {
-								history.push("/register/web-bootcamp");
-							}}
-						>
-							Register
-						</Button>
+											<Row gutter={16}>
+												<Col span={12}>
+													<Form.Item required>
+														{getFieldDecorator(
+															"branch",
+															{
+																rules: [
+																	{
+																		required: true,
+																		message:
+																			"Please select the branch"
+																	}
+																]
+															}
+														)(
+															<Select placeholder="Branch">
+																<Option
+																	value=""
+																	disabled
+																>
+																	Select
+																	Branch
+																</Option>
+																{GET_BRANCHES().map(
+																	branch => (
+																		<Option
+																			key={
+																				branch
+																			}
+																			value={
+																				branch
+																			}
+																		>
+																			{
+																				branch
+																			}
+																		</Option>
+																	)
+																)}
+															</Select>
+														)}
+													</Form.Item>
+												</Col>
+												<Col span={12}>
+													<Form.Item required>
+														{getFieldDecorator(
+															"year",
+															{
+																rules: [
+																	{
+																		required: true,
+																		message:
+																			"Please select the year"
+																	}
+																]
+															}
+														)(
+															<Select placeholder="Year">
+																<Option
+																	value=""
+																	disabled
+																>
+																	Select Year
+																</Option>
+																{GET_YEARS().map(
+																	year => (
+																		<Option
+																			key={
+																				year
+																			}
+																			value={
+																				year
+																			}
+																		>
+																			{
+																				year
+																			}
+																		</Option>
+																	)
+																)}
+															</Select>
+														)}
+													</Form.Item>
+												</Col>
+											</Row>
+
+											<Form.Item>
+												<Button
+													type="primary"
+													htmlType="submit"
+													className="login-form-button"
+													// loading={isLoading}
+												>
+													Register
+												</Button>
+											</Form.Item>
+										</Form>
+									) : (
+										<Form
+											style={{ marginTop: "28px" }}
+											onSubmit={handleLogin}
+										>
+											<Form.Item>
+												{getFieldDecorator("email", {
+													rules: [
+														{
+															type: "email",
+															required: true,
+															message:
+																"Please input your email!"
+														}
+													]
+												})(
+													<Input
+														prefix={
+															<Icon
+																type="user"
+																style={{
+																	color: "rgba(0,0,0,.25)"
+																}}
+															/>
+														}
+														type="email"
+														placeholder="Email"
+													/>
+												)}
+											</Form.Item>
+											<Form.Item>
+												{getFieldDecorator("password", {
+													rules: [
+														{
+															required: true,
+															message:
+																"Please input your Password!"
+														}
+													]
+												})(
+													<Input.Password
+														prefix={
+															<Icon
+																type="lock"
+																style={{
+																	color: "rgba(0,0,0,.25)"
+																}}
+															/>
+														}
+														type="password"
+														placeholder="Password"
+													/>
+												)}
+											</Form.Item>
+											<Form.Item>
+												<Button
+													type="primary"
+													htmlType="submit"
+													className="login-form-button"
+													loading={isLoading}
+												>
+													Log in
+												</Button>
+											</Form.Item>
+											<div
+												style={{
+													float: "right",
+													fontWeight: 300
+												}}
+											>
+												<Link to="/forgot">
+													Forgot Password ?
+												</Link>
+											</div>
+										</Form>
+									)}
+								</div>
+							</>
+						)}
 					</div>
 				</div>
 			</section>
@@ -120,4 +540,6 @@ const Landing = () => {
 	);
 };
 
-export default Landing;
+const LoginForm = Form.create({ name: "login_form" })(Landing);
+
+export default LoginForm;

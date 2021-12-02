@@ -32,6 +32,7 @@ const EventsList = props => {
 			// setIsLoading(true);
 			try {
 				const { data } = await getEventsService();
+				console.log(data);
 				// console.log(data);
 				setEvents(data.upcomingEvents);
 				setEventType("upcoming");
