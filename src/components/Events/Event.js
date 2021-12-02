@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Tag, Card, Col, Row } from "antd";
 import "./style.css";
 import EventDetails from "./EventDetails";
@@ -20,6 +20,14 @@ const Events = props => {
 	const handleModal = value => {
 		setShowModal(value);
 	};
+
+	useEffect(() => {
+		if (props.eve === props.event._id) {
+			setShowModal(!showModal);
+			props.setEve("");
+		}
+		//eslint-disable-next-line
+	}, [props.eve]);
 
 	return (
 		<>
