@@ -14,6 +14,7 @@ const EventsList = props => {
 	// const [refresh, toggleRefresh] = useState(false);
 	// const [isLoading, setIsLoading] = useState(false);
 	const [allEvents, setAllEvents] = useState([]);
+	const [eve, setEve] = useState("");
 
 	const handleChange = val => {
 		setEventType(val);
@@ -33,7 +34,12 @@ const EventsList = props => {
 			try {
 				const { data } = await getEventsService();
 				console.log(data);
-				// console.log(data);
+				if (props.history.location.state) {
+					const { eid } = props.history.location.state;
+					const event = data.allEvents.filter(e => e._id === eid)[0];
+					setEve(eid);
+					console.log(event);
+				}
 				setEvents(data.upcomingEvents);
 				setEventType("upcoming");
 				setAllEvents(data);
@@ -42,9 +48,8 @@ const EventsList = props => {
 				_notification("warning", "Error", err.message);
 			}
 		})();
+		//eslint-disable-next-line
 	}, []);
-
-	console.log(events);
 
 	return (
 		<div className="all-Containers">
@@ -67,6 +72,9 @@ const EventsList = props => {
 								key={id}
 								event={event}
 								eventType={eventType}
+								eve={eve}
+								setEve={setEve}
+								setEventType={setEventType}
 							/>
 						))
 					) : (

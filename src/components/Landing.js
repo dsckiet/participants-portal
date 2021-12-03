@@ -9,15 +9,18 @@ import {
 	Col,
 	InputNumber,
 	Spin,
-	Select
+	Select,
+	Tooltip
 } from "antd";
 import { Link } from "react-router-dom";
 import { GET_BRANCHES, GET_YEARS, _notification } from "../utils/_helpers";
 import {
 	getEventsService,
+	getParticipantService,
 	loginService,
 	registerBothService,
-	registerEventService
+	registerEventService,
+	getRole
 } from "../utils/services";
 import { DispatchContext } from "../contexts/userContext";
 import ReactMarkdown from "react-markdown";
@@ -32,25 +35,37 @@ const Landing = props => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [eventData, setEventData] = useState(null);
+	const [refresh, setRefresh] = useState(false);
 	const [pageLoading, setPageLoading] = useState(false);
+	const [event, setEvent] = useState("");
 	const { slug } = props.match.params;
 
 	useEffect(() => {
-		const token = JSON.parse(localStorage.getItem("token"));
-		if (token) {
-			if (token.token !== "") {
-				setIsLoggedIn(true);
+		(async () => {
+			const token = JSON.parse(localStorage.getItem("token"));
+			if (token) {
+				if (token.token !== "") {
+					const [userData] = getRole();
+					setIsLoggedIn(true);
+					const params = { pid: userData.id };
+					const res = await getParticipantService(params);
+					if (res.message === "success" && !res.error) {
+						let a = [];
+						res.data.events.map(value => a.push(value.eid));
+						setEvent(a);
+					}
+				}
 			}
-		}
+		})();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [refresh]);
 
 	useEffect(() => {
 		(async () => {
 			setPageLoading(true);
 			try {
 				const res = await getEventsService();
-				console.log(res);
+
 				if (res.message === "success" && !res.error) {
 					const event = res.data.allEvents.filter(
 						obj => obj?.slug === slug
@@ -99,7 +114,12 @@ const Landing = props => {
 							password: ""
 						});
 						setTimeout(() => {
-							props.history.push("/");
+							props.history.push({
+								pathname: "/events",
+								state: {
+									eid: eventData._id
+								}
+							});
 						}, 200);
 					}
 					setIsLoading(false);
@@ -123,8 +143,8 @@ const Landing = props => {
 			const res = await registerEventService(body);
 
 			if (res.message === "success") {
+				setRefresh(!refresh);
 				_notification("success", "Success", "Registration Successful!");
-				history.push("/dashboard");
 			} else {
 				_notification("error", "Error", res.message);
 			}
@@ -244,295 +264,351 @@ const Landing = props => {
 									eventData.endDate.split("T")[0]
 								).format("DD MMMM YY")}`}
 						</div>
-						{isLoggedIn ? (
-							<Button
-								style={{
-									width: "100%",
-									fontSize: "16px",
-									marginBottom: "16px"
-								}}
-								size="large"
-								type="primary"
-								onClick={handleRegisterEvent}
-							>
-								Register
-							</Button>
-						) : (
-							<>
-								<div
-									style={{
-										fontSize: "16px",
-										padding: "4px 0px",
-										border: "2px solid #E8E8E8",
-										borderRadius: "4px"
-									}}
-								>
-									<div
+						{eventData && eventData.isRegistrationRequired ? (
+							eventData.isRegistrationOpened &&
+							!event.includes(eventData._id) ? (
+								isLoggedIn ? (
+									<Button
 										style={{
-											display: "flex",
 											width: "100%",
-											position: "relative"
+											fontSize: "16px",
+											marginBottom: "16px"
 										}}
+										size="large"
+										type="primary"
+										onClick={handleRegisterEvent}
 									>
+										Register
+									</Button>
+								) : (
+									<>
 										<div
-											onClick={() => setActive(0)}
-											className={`tab ${
-												active === 0 && "active-tab"
-											}`}
+											style={{
+												fontSize: "16px",
+												padding: "4px 0px",
+												border: "2px solid #E8E8E8",
+												borderRadius: "4px"
+											}}
 										>
-											Register
-										</div>
-										<div
-											onClick={() => setActive(1)}
-											className={`tab ${
-												active === 1 && "active-tab"
-											}`}
-										>
-											Log in
-										</div>
-										<div
-											className={`glider ${
-												active === 1 && "glider-active"
-											}`}
-										/>
-									</div>
-								</div>
-								<div style={{ marginTop: "16px" }}>
-									{active === 0 ? (
-										<Form
-											onSubmit={handleRegisterBoth}
-											style={{ marginTop: "28px" }}
-										>
-											<Form.Item>
-												{getFieldDecorator("name", {
-													rules: [
-														{
-															required: true,
-															message:
-																"Please input your name!"
-														}
-													]
-												})(
-													<Input
-														type="text"
-														placeholder="Name"
-													/>
-												)}
-											</Form.Item>
-											<Form.Item>
-												{getFieldDecorator("email", {
-													rules: [
-														{
-															type: "email",
-															required: true,
-															message:
-																"Please input your email!"
-														}
-													]
-												})(
-													<Input
-														type="email"
-														placeholder="Email"
-													/>
-												)}
-											</Form.Item>
-											<Form.Item>
-												{getFieldDecorator("phone", {
-													rules: [
-														{
-															required: true,
-															message:
-																"Please input your phone number!"
-														}
-													]
-												})(
-													<InputNumber
-														minLength={10}
-														maxLength={10}
-														style={{
-															width: "100%"
-														}}
-														placeholder="Phone no."
-													/>
-												)}
-											</Form.Item>
-
-											<Row gutter={16}>
-												<Col span={12}>
-													<Form.Item required>
-														{getFieldDecorator(
-															"branch",
-															{
-																rules: [
-																	{
-																		required: true,
-																		message:
-																			"Please select the branch"
-																	}
-																]
-															}
-														)(
-															<Select placeholder="Branch">
-																<Option
-																	value=""
-																	disabled
-																>
-																	Select
-																	Branch
-																</Option>
-																{GET_BRANCHES().map(
-																	branch => (
-																		<Option
-																			key={
-																				branch
-																			}
-																			value={
-																				branch
-																			}
-																		>
-																			{
-																				branch
-																			}
-																		</Option>
-																	)
-																)}
-															</Select>
-														)}
-													</Form.Item>
-												</Col>
-												<Col span={12}>
-													<Form.Item required>
-														{getFieldDecorator(
-															"year",
-															{
-																rules: [
-																	{
-																		required: true,
-																		message:
-																			"Please select the year"
-																	}
-																]
-															}
-														)(
-															<Select placeholder="Year">
-																<Option
-																	value=""
-																	disabled
-																>
-																	Select Year
-																</Option>
-																{GET_YEARS().map(
-																	year => (
-																		<Option
-																			key={
-																				year
-																			}
-																			value={
-																				year
-																			}
-																		>
-																			{
-																				year
-																			}
-																		</Option>
-																	)
-																)}
-															</Select>
-														)}
-													</Form.Item>
-												</Col>
-											</Row>
-
-											<Form.Item>
-												<Button
-													type="primary"
-													htmlType="submit"
-													className="login-form-button"
-													// loading={isLoading}
-												>
-													Register
-												</Button>
-											</Form.Item>
-										</Form>
-									) : (
-										<Form
-											style={{ marginTop: "28px" }}
-											onSubmit={handleLogin}
-										>
-											<Form.Item>
-												{getFieldDecorator("email", {
-													rules: [
-														{
-															type: "email",
-															required: true,
-															message:
-																"Please input your email!"
-														}
-													]
-												})(
-													<Input
-														prefix={
-															<Icon
-																type="user"
-																style={{
-																	color: "rgba(0,0,0,.25)"
-																}}
-															/>
-														}
-														type="email"
-														placeholder="Email"
-													/>
-												)}
-											</Form.Item>
-											<Form.Item>
-												{getFieldDecorator("password", {
-													rules: [
-														{
-															required: true,
-															message:
-																"Please input your Password!"
-														}
-													]
-												})(
-													<Input.Password
-														prefix={
-															<Icon
-																type="lock"
-																style={{
-																	color: "rgba(0,0,0,.25)"
-																}}
-															/>
-														}
-														type="password"
-														placeholder="Password"
-													/>
-												)}
-											</Form.Item>
-											<Form.Item>
-												<Button
-													type="primary"
-													htmlType="submit"
-													className="login-form-button"
-													loading={isLoading}
-												>
-													Log in
-												</Button>
-											</Form.Item>
 											<div
 												style={{
-													float: "right",
-													fontWeight: 300
+													display: "flex",
+													width: "100%",
+													position: "relative"
 												}}
 											>
-												<Link to="/forgot">
-													Forgot Password ?
-												</Link>
+												<div
+													onClick={() => setActive(0)}
+													className={`tab ${
+														active === 0 &&
+														"active-tab"
+													}`}
+												>
+													Register
+												</div>
+												<div
+													onClick={() => setActive(1)}
+													className={`tab ${
+														active === 1 &&
+														"active-tab"
+													}`}
+												>
+													Log in
+												</div>
+												<div
+													className={`glider ${
+														active === 1 &&
+														"glider-active"
+													}`}
+												/>
 											</div>
-										</Form>
-									)}
-								</div>
-							</>
-						)}
+										</div>
+										<div style={{ marginTop: "16px" }}>
+											{active === 0 ? (
+												<Form
+													onSubmit={
+														handleRegisterBoth
+													}
+													style={{
+														marginTop: "28px"
+													}}
+												>
+													<Form.Item>
+														{getFieldDecorator(
+															"name",
+															{
+																rules: [
+																	{
+																		required: true,
+																		message:
+																			"Please input your name!"
+																	}
+																]
+															}
+														)(
+															<Input
+																type="text"
+																placeholder="Name"
+															/>
+														)}
+													</Form.Item>
+													<Form.Item>
+														{getFieldDecorator(
+															"email",
+															{
+																rules: [
+																	{
+																		type: "email",
+																		required: true,
+																		message:
+																			"Please input your email!"
+																	}
+																]
+															}
+														)(
+															<Input
+																type="email"
+																placeholder="Email"
+															/>
+														)}
+													</Form.Item>
+													<Form.Item>
+														{getFieldDecorator(
+															"phone",
+															{
+																rules: [
+																	{
+																		required: true,
+																		message:
+																			"Please input your phone number!"
+																	}
+																]
+															}
+														)(
+															<InputNumber
+																minLength={10}
+																maxLength={10}
+																style={{
+																	width: "100%"
+																}}
+																placeholder="Phone no."
+															/>
+														)}
+													</Form.Item>
+
+													<Row gutter={16}>
+														<Col span={12}>
+															<Form.Item required>
+																{getFieldDecorator(
+																	"branch",
+																	{
+																		rules: [
+																			{
+																				required: true,
+																				message:
+																					"Please select the branch"
+																			}
+																		]
+																	}
+																)(
+																	<Select placeholder="Branch">
+																		<Option
+																			value=""
+																			disabled
+																		>
+																			Select
+																			Branch
+																		</Option>
+																		{GET_BRANCHES().map(
+																			branch => (
+																				<Option
+																					key={
+																						branch
+																					}
+																					value={
+																						branch
+																					}
+																				>
+																					{
+																						branch
+																					}
+																				</Option>
+																			)
+																		)}
+																	</Select>
+																)}
+															</Form.Item>
+														</Col>
+														<Col span={12}>
+															<Form.Item required>
+																{getFieldDecorator(
+																	"year",
+																	{
+																		rules: [
+																			{
+																				required: true,
+																				message:
+																					"Please select the year"
+																			}
+																		]
+																	}
+																)(
+																	<Select placeholder="Year">
+																		<Option
+																			value=""
+																			disabled
+																		>
+																			Select
+																			Year
+																		</Option>
+																		{GET_YEARS().map(
+																			year => (
+																				<Option
+																					key={
+																						year
+																					}
+																					value={
+																						year
+																					}
+																				>
+																					{
+																						year
+																					}
+																				</Option>
+																			)
+																		)}
+																	</Select>
+																)}
+															</Form.Item>
+														</Col>
+													</Row>
+
+													<Form.Item>
+														<Button
+															type="primary"
+															htmlType="submit"
+															className="login-form-button"
+															// loading={isLoading}
+														>
+															Register
+														</Button>
+													</Form.Item>
+												</Form>
+											) : (
+												<Form
+													style={{
+														marginTop: "28px"
+													}}
+													onSubmit={handleLogin}
+												>
+													<Form.Item>
+														{getFieldDecorator(
+															"email",
+															{
+																rules: [
+																	{
+																		type: "email",
+																		required: true,
+																		message:
+																			"Please input your email!"
+																	}
+																]
+															}
+														)(
+															<Input
+																prefix={
+																	<Icon
+																		type="user"
+																		style={{
+																			color: "rgba(0,0,0,.25)"
+																		}}
+																	/>
+																}
+																type="email"
+																placeholder="Email"
+															/>
+														)}
+													</Form.Item>
+													<Form.Item>
+														{getFieldDecorator(
+															"password",
+															{
+																rules: [
+																	{
+																		required: true,
+																		message:
+																			"Please input your Password!"
+																	}
+																]
+															}
+														)(
+															<Input.Password
+																prefix={
+																	<Icon
+																		type="lock"
+																		style={{
+																			color: "rgba(0,0,0,.25)"
+																		}}
+																	/>
+																}
+																type="password"
+																placeholder="Password"
+															/>
+														)}
+													</Form.Item>
+													<Form.Item>
+														<Button
+															type="primary"
+															htmlType="submit"
+															className="login-form-button"
+															loading={isLoading}
+														>
+															Log in
+														</Button>
+													</Form.Item>
+													<div
+														style={{
+															float: "right",
+															fontWeight: 300
+														}}
+													>
+														<Link to="/forgot">
+															Forgot Password ?
+														</Link>
+													</div>
+												</Form>
+											)}
+										</div>
+									</>
+								)
+							) : (
+								<Tooltip
+									placement="top"
+									title={
+										event.includes(
+											eventData && eventData._id
+										)
+											? "Already registered"
+											: "Registrations are closed"
+									}
+									style={{ display: "flex" }}
+								>
+									<Button
+										style={{
+											width: "100%",
+											fontSize: "16px",
+											marginBottom: "16px"
+										}}
+										size="large"
+										type="primary"
+										onClick={handleRegisterEvent}
+										disabled
+									>
+										Register
+									</Button>
+								</Tooltip>
+							)
+						) : null}
 					</div>
 				</div>
 			</section>
