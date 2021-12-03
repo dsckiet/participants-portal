@@ -45,9 +45,8 @@ const Landing = props => {
 			const token = JSON.parse(localStorage.getItem("token"));
 			if (token) {
 				if (token.token !== "") {
-					console.log(getRole);
 					const userData = getRole();
-					console.log(userData, "jj");
+
 					setIsLoggedIn(true);
 					const params = { pid: userData?.id };
 					const res = await getParticipantService(params);

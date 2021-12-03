@@ -128,7 +128,7 @@ const MyEventDetails = props => {
 			let start = new Date(event.startDate);
 			let end = new Date(event.endDate);
 			let status;
-			console.log(start);
+
 			for (let d = start; d <= end; d.setDate(d.getDate() + 1)) {
 				if (
 					attendance.includes(
