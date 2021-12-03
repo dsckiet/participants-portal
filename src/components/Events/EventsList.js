@@ -36,7 +36,7 @@ const EventsList = props => {
 
 				if (props.history.location.state) {
 					const { eid } = props.history.location.state;
-					const event = data.allEvents.filter(e => e._id === eid)[0];
+					// const event = data.allEvents.filter(e => e._id === eid)[0];
 					setEve(eid);
 				}
 				setEvents(data.upcomingEvents);
