@@ -82,7 +82,7 @@ body {
 .cover-image {
 	height: 100%;
 	width: calc(100% + 1px);
-	background-image: url("./utils/assets/images/demo.png");
+	/* background-image: url("./utils/assets/images/demo.png"); */
 	background-position: 50% 50%;
 	background-repeat: no-repeat;
 	background-size: cover;

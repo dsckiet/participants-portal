@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Button } from "antd";
-import demo from "../utils/assets/images/demo.png";
+// import demo from "../utils/assets/images/demo.png";
 import { updateRsvpService } from "../utils/services";
 
 const Rsvp = props => {
@@ -40,7 +40,7 @@ const Rsvp = props => {
 			<section className="cntnr">
 				<div style={{ padding: "15px 20px 20px 15px" }}>
 					<img
-						src={demo}
+						src={""}
 						alt=""
 						width="100%"
 						style={{
