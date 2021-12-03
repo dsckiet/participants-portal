@@ -33,12 +33,11 @@ const EventsList = props => {
 			// setIsLoading(true);
 			try {
 				const { data } = await getEventsService();
-				console.log(data);
+
 				if (props.history.location.state) {
 					const { eid } = props.history.location.state;
-					const event = data.allEvents.filter(e => e._id === eid)[0];
+					// const event = data.allEvents.filter(e => e._id === eid)[0];
 					setEve(eid);
-					console.log(event);
 				}
 				setEvents(data.upcomingEvents);
 				setEventType("upcoming");
