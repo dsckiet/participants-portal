@@ -45,15 +45,18 @@ const Landing = props => {
 			const token = JSON.parse(localStorage.getItem("token"));
 			if (token) {
 				if (token.token !== "") {
-					const [userData] = getRole();
+					console.log(getRole);
+					const userData = getRole();
+					console.log(userData, "jj");
 					setIsLoggedIn(true);
-					const params = { pid: userData.id };
+					const params = { pid: userData?.id };
 					const res = await getParticipantService(params);
 					if (res.message === "success" && !res.error) {
 						let a = [];
 						res.data.events.map(value => a.push(value.eid));
 						setEvent(a);
 					}
+					// setEvent([]);
 				}
 			}
 		})();
