@@ -198,7 +198,7 @@ const Landing = props => {
 				title={title}
 				style={{
 					maxWidth: "100%",
-					borderRadius: "8px",
+					borderRadius: "4px",
 					marginTop: "12px"
 				}}
 			/>
