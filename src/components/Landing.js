@@ -190,6 +190,21 @@ const Landing = props => {
 		});
 	};
 
+	const renderers = {
+		img: ({ alt, src, title }) => (
+			<img
+				alt={alt}
+				src={src}
+				title={title}
+				style={{
+					maxWidth: "100%",
+					borderRadius: "8px",
+					marginTop: "12px"
+				}}
+			/>
+		)
+	};
+
 	return pageLoading ? (
 		<div
 			style={{
@@ -231,7 +246,7 @@ const Landing = props => {
 							Event Details
 						</div>
 						<div style={{ fontSize: "18px", paddingTop: "16px" }}>
-							<ReactMarkdown>
+							<ReactMarkdown components={renderers}>
 								{eventData && eventData.description}
 							</ReactMarkdown>
 						</div>
