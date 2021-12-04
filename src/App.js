@@ -17,7 +17,7 @@ import "./custom-antd.css";
 import { AuthContext } from "./contexts/userContext";
 import ForgotPassword from "./components/Authentication/ForgotPassword";
 import ResetPassword from "./components/Authentication/ResetPassword";
-// import Rsvp from "./components/Rsvp";
+import Rsvp from "./components/Rsvp";
 
 function App() {
 	return (
@@ -35,6 +35,11 @@ function App() {
 					exact
 					path="/reset/:id/:token"
 					component={ResetPassword}
+				/>
+				<Route
+					exact
+					path="/update-rsvp/:oid/:eid/:pid"
+					component={Rsvp}
 				/>
 				<Route exact path="/event/:slug" component={Landing} />
 				<PrivateRoute path="/" component={Navigator} />
