@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from "react";
 import PageTitle from "./../../Layout/PageTitle";
-import { Card, Row, Col, Button, Tag, Drawer, Table, Popover } from "antd";
+import {
+	Card,
+	Row,
+	Col,
+	// Button,
+	Tag,
+	Drawer,
+	Table
+	//  Popover
+} from "antd";
 import { getParticipantService, getRole } from "../../../utils/services";
 import { _notification } from "./../../../utils/_helpers";
 import styled from "styled-components";
@@ -18,9 +27,9 @@ const Heading = styled.h4`
 	font-size: 28px;
 `;
 
-const DescriptionContainer = styled.div`
-	margin-top: 0px;
-`;
+// const DescriptionContainer = styled.div`
+// 	margin-top: 0px;
+// `;
 
 const DescHeading = styled.h4`
 	font-size: 18px;
@@ -40,6 +49,7 @@ const MyEventDetails = props => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [data, setData] = useState([]);
 	const [report, setReport] = useState(null);
+	//eslint-disable-next-line
 	const [participantEvent, setParticipantEvent] = useState(null);
 	const [userData] = useState(getRole());
 
@@ -225,7 +235,7 @@ const MyEventDetails = props => {
 							</Wrapper>
 						</Col>
 						<Col xl={10} lg={8} md={8} sm={24} xs={24}>
-							<DescriptionContainer>
+							{/* <DescriptionContainer>
 								<DescHeading>Description</DescHeading>
 								<p>{report.event.description}</p>
 								<div>
@@ -267,7 +277,7 @@ const MyEventDetails = props => {
 										</Button>
 									</Popover>
 								</div>
-							</DescriptionContainer>
+							</DescriptionContainer> */}
 						</Col>
 					</Row>
 				</Card>
