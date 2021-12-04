@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Button } from "antd";
 import { getEventService, updateRsvpService } from "../utils/services";
-import Axios from "axios";
+// import Axios from "axios";
 
 const Rsvp = props => {
 	const history = useHistory();
