@@ -238,8 +238,8 @@ const MyEventDetails = props => {
 						</Col>
 						<Col xl={10} lg={8} md={8} sm={24} xs={24}>
 							<DescriptionContainer>
-								<DescHeading>Description</DescHeading>
-								<p>{report.event.description}</p>
+								{/* <DescHeading>Description</DescHeading>
+								<p>{report.event.description}</p> */}
 								<div>
 									{report && report.attendance.length ? (
 										<Button
