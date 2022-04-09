@@ -66,9 +66,9 @@ const EventsList = props => {
 			<div className="events-wrapper">
 				<Row gutter={[16, 16]}>
 					{events.length !== 0 ? (
-						events.map((event, id) => (
+						events.map((event) => (
 							<Event
-								key={id}
+								key={event._id}
 								event={event}
 								eventType={eventType}
 								eve={eve}
