@@ -56,7 +56,7 @@ const UpdateProfile = props => {
 		<Skeleton loading={showSkeleton} active>
 			<Form onSubmit={handleSubmit} layout="vertical">
 				<Row gutter={16}>
-					<Col span={12}>
+					<Col>
 						<Form.Item label="Name" required>
 							{getFieldDecorator("name", {
 								rules: [
@@ -68,7 +68,7 @@ const UpdateProfile = props => {
 							})(<Input type="text" placeholder="Name" />)}
 						</Form.Item>
 					</Col>
-					<Col span={12}>
+					{/* <Col span={12}>
 						<Form.Item label="Email" required>
 							{getFieldDecorator("email", {
 								rules: [
@@ -79,7 +79,7 @@ const UpdateProfile = props => {
 								]
 							})(<Input type="text" placeholder="Email" />)}
 						</Form.Item>
-					</Col>
+					</Col> */}
 				</Row>
 
 				<Form.Item label="Password">
