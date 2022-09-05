@@ -25,6 +25,7 @@ import {
 import { DispatchContext } from "../contexts/userContext";
 import ReactMarkdown from "react-markdown";
 import moment from "moment";
+import gfm from 'remark-gfm'
 const { Option } = Select;
 
 const Landing = props => {
@@ -269,7 +270,7 @@ const Landing = props => {
 							Event Details
 						</div>
 						<div style={{ fontSize: "18px", paddingTop: "16px" }}>
-							<ReactMarkdown components={renderers}>
+							<ReactMarkdown remarkPlugins={[gfm]} components={renderers}>
 								{eventData && eventData.description}
 							</ReactMarkdown>
 						</div>
