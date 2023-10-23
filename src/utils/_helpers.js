@@ -11,17 +11,15 @@ export const GET_BRANCHES = () => {
 	return [
 		"CSE",
 		"IT",
+        "CS",
+		"CSAI",
+		"CSAI&ML",
+		"CSIT",
 		"ME",
-		"CO",
-		"CSI",
 		"ECE",
-		"CI",
+		"Civil",
 		"EN",
-		"EI",
 		"MCA",
-		"B.PHARMA",
-		"M.PHARMA",
-		"MBA"
 	];
 };
 
