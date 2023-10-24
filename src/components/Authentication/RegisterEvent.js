@@ -54,7 +54,7 @@ const Register = props => {
 	const { getFieldDecorator } = props.form;
 	return (
 		<div style={{ height: "100vh", overflow: "hidden" }}>
-			<img src={logo} width={160} className="vidgyor-logo" alt="" />
+			<img src={logo} width={200} className="vidgyor-logo" alt="" />
 			<Card title="Create your account" className="login-form-wrapper">
 				<Form onSubmit={handleSubmit} className="login-form">
 					<Form.Item>

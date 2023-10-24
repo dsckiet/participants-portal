@@ -60,7 +60,7 @@ const ResetPassword = props => {
 
 	return (
 		<div style={{ height: "100vh", overflow: "hidden" }}>
-			<img src={logo} width={160} className="vidgyor-logo" alt="" />
+			<img src={logo} width={200} className="vidgyor-logo" alt="" />
 			<Card title="Reset Password" className="login-form-wrapper">
 				<Form onSubmit={handleSubmit} className="login-form">
 					<p style={{ textAlign: "center", fontWeight: "300" }}>

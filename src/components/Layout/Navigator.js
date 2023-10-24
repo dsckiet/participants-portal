@@ -36,7 +36,8 @@ const Navigator = props => {
 						<img
 							src={logo}
 							hidden={isCollapsed}
-							width="150"
+							width="160"
+							height="40"
 							alt="logo"
 						/>
 					</MenuLogo>
