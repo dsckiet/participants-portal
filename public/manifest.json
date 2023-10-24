@@ -1,8 +1,8 @@
 {
-	"name": "Developer Student Circuit KIET",
-	"short_name": "Developer Student Circuit KIET",
+	"name": "Google Developer Student Club KIET",
+	"short_name": "Google Developer Student Club KIET",
 	"description": "Explore and register for dsckiet events, bootcamps, hackathons and workshops.",
-	"icons": [
+	"icons": [ 
 		{
 			"src": "/apple-touch-icon",
 			"sizes": "180x180",
